@@ -54,3 +54,4 @@ server.tomcat.accesslog.directory=logs
 - 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
   - https://github.com/igakilab/springboot_samples/commit/dfb755c75f097ff1ef22293bf97173fc78c53ae3
 - http://localhost:8000/api/hello
+  - Classにapiという名前をつけて，メソッドにhelloという名前をつける．↑のURLを呼び出すとhelloと名前をつけたメソッドの返り値が表示される
