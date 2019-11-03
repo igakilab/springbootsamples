@@ -41,11 +41,13 @@ server.tomcat.accesslog.directory=logs
 - プロジェクトのbuild/logsフォルダにアクセスログが保存されるようになる．LogFormat等は今後要検討
 - ポート番号 `server.port=8000`
 
+## SpringBootWebアプリの実行方法
+- gradle build -> gradle bootRun を実行すると組み込みTomcatでSpringBootアプリが起動する
+  - build/libs/ 以下に作成されるjarを対象に，java -jar ???.jar でもSpringBootWebアプリケーションが起動する
+
 ## Samples
 ### templateを利用したhtmlファイルの表示
 - 参考：https://qiita.com/yama9112/items/ff829561238440437b99
-  - gradle build -> gradle bootRun を実行すると組み込みTomcatでSpringBootアプリが起動する
-  - build/libs/ 以下に作成されるjarを対象に，java -jar ???.jar でもSpringBootWebアプリケーションが起動する
   - http://localhost:8080/sample
 
 ### RestControllerを利用したapiの定義と利用(GET)
