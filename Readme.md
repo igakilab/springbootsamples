@@ -42,16 +42,22 @@ server.tomcat.accesslog.directory=logs
 - ポート番号 `server.port=8000`
 
 ## SpringBootWebアプリの実行方法
-- gradle build -> gradle bootRun を実行すると組み込みTomcatでSpringBootアプリが起動する
-  - build/libs/ 以下に作成されるjarを対象に，java -jar ???.jar でもSpringBootWebアプリケーションが起動する
+- gradle bootRun を実行するとSpringBootアプリがビルドされ，組み込みTomcatで起動する
+  - build/libs/ 以下に作成されるjarを対象に，java -jar ???.jar でもSpringBootWebアプリケーションを起動できる
 
 ## Samples
 ### templateを利用したhtmlファイルの表示
 - 参考：https://qiita.com/yama9112/items/ff829561238440437b99
-  - http://localhost:8080/sample
+  - http://localhost:8000/sample
 
 ### RestControllerを利用したapiの定義と利用(GET)
 - 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
   - https://github.com/igakilab/springboot_samples/commit/dfb755c75f097ff1ef22293bf97173fc78c53ae3
 - http://localhost:8000/api/hello
   - Classにapiという名前をつけて，メソッドにhelloという名前をつける．↑のURLを呼び出すとhelloと名前をつけたメソッドの返り値が表示される
+
+### パスパラメータ
+- 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
+  - https://github.com/igakilab/springboot_samples/commit/b653a6ffab85606bc1dec3b67ae960a166e5eaf9
+- http://localhost:8000/api/test/hoge/fuga
+  - `@RequestMapping("test/{param1}/{param2}")` とアノテートされたメソッドを呼び出す．メソッドの仮引数にパスパラメータを割り当てられる
