@@ -61,3 +61,9 @@ server.tomcat.accesslog.directory=logs
   - https://github.com/igakilab/springboot_samples/commit/b653a6ffab85606bc1dec3b67ae960a166e5eaf9
 - http://localhost:8000/api/test/hoge/fuga
   - `@RequestMapping("test/{param1}/{param2}")` とアノテートされたメソッドを呼び出す．メソッドの仮引数にパスパラメータを割り当てられる
+
+### クエリパラメータ
+- 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
+  - https://github.com/igakilab/springboot_samples/commit/2cf5f05d2e136a0b7c3be9820164a9c748c1db86
+- http://localhost:8000/api/test?param=hoge
+  - `@RequestMapping("test")`なメソッドを呼び出す．クエリパラメータ名は指定がなければ仮引数の名前と同じ

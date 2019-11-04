@@ -11,6 +11,6 @@ public class SampleController {
 
   @RequestMapping("/sample")
   public String sample() {
-    return "sample";
+    return "sample.html";
   }
 }
