@@ -52,18 +52,26 @@ server.tomcat.accesslog.directory=logs
 
 ### RestControllerを利用したapiの定義と利用(GET)
 - 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
-  - https://github.com/igakilab/springboot_samples/commit/dfb755c75f097ff1ef22293bf97173fc78c53ae3
+  - 実装：https://github.com/igakilab/springboot_samples/commit/dfb755c75f097ff1ef22293bf97173fc78c53ae3
 - http://localhost:8000/api/hello
   - Classにapiという名前をつけて，メソッドにhelloという名前をつける．↑のURLを呼び出すとhelloと名前をつけたメソッドの返り値が表示される
 
-### パスパラメータ
+### Restのパスパラメータ
 - 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
-  - https://github.com/igakilab/springboot_samples/commit/b653a6ffab85606bc1dec3b67ae960a166e5eaf9
+  - 実装：https://github.com/igakilab/springboot_samples/commit/b653a6ffab85606bc1dec3b67ae960a166e5eaf9
 - http://localhost:8000/api/test/hoge/fuga
   - `@RequestMapping("test/{param1}/{param2}")` とアノテートされたメソッドを呼び出す．メソッドの仮引数にパスパラメータを割り当てられる
 
-### クエリパラメータ
+### Restのクエリパラメータ
 - 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
-  - https://github.com/igakilab/springboot_samples/commit/2cf5f05d2e136a0b7c3be9820164a9c748c1db86
+  - 実装：https://github.com/igakilab/springboot_samples/commit/2cf5f05d2e136a0b7c3be9820164a9c748c1db86
 - http://localhost:8000/api/test?param=hoge
   - `@RequestMapping("test")`なメソッドを呼び出す．クエリパラメータ名は指定がなければ仮引数の名前と同じ
+
+### 複数ユーザによるベーシック認証とユーザ名表示
+- 参考
+  - https://www.codeflow.site/ja/article/spring-security__get-current-logged-in-username-in-spring-security
+  - https://qiita.com/opengl-8080/items/eb3bf3b5301bae398cc2
+  - 実装：https://github.com/igakilab/springboot_samples/commit/0b7b4c6032f6bfd6b0c66ec6c90190af27e560fc
+- http://localhost:8000/hello
+  - タイムリーフの使い方，ログインユーザ名の取得方法
