@@ -87,3 +87,15 @@ server.tomcat.accesslog.directory=logs
   - 実装：https://github.com/igakilab/springboot_samples/commit/201f416fca7223566158586a98664deffc3fcc33
 - http://localhost:8000/sample
   - ベーシック認証がこのリクエストについてのみかからない．
+
+## フォームを利用してPOSTするサンプル
+- 参考
+  - https://pointsandlines.jp/java/springboot-request-param
+    - html部分のみこのままだとエラー
+  - https://qiita.com/NagaokaKenichi/items/c6d1b76090ef5ef39482
+    - タイムリーフのチートシート
+  - 実装：https://github.com/igakilab/springboot_samples/commit/297f8113ba3d7736a65537bf7b89dff9082ba5c0
+- http://localhost:8000/result
+  - フィールドに数字を入れ，送信ボタンを押すと，フォームの下にGet 5等の数字が表示される．
+  - result.htmlに対するGET/POST両方のコントローラを作成し，処理を実施
+  - タイムリーフを利用し，値があるときとないとで表示を変える条件分岐もサンプル実装してみた
