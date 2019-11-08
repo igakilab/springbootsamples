@@ -75,3 +75,10 @@ server.tomcat.accesslog.directory=logs
   - 実装：https://github.com/igakilab/springboot_samples/commit/0b7b4c6032f6bfd6b0c66ec6c90190af27e560fc
 - http://localhost:8000/hello
   - タイムリーフの使い方，ログインユーザ名の取得方法
+
+### 特定ページへのベーシック認証をかけない設定
+- 参考
+  - https://intellectual-curiosity.tokyo/2019/04/14/spring-boot-2-x-%E3%81%A7basic%E8%AA%8D%E8%A8%BC%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/
+  - 実装：https://github.com/igakilab/springboot_samples/commit/201f416fca7223566158586a98664deffc3fcc33
+- http://localhost:8000/sample
+  - ベーシック認証がこのリクエストについてのみかからない．
