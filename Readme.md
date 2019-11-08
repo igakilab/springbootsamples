@@ -1,3 +1,7 @@
+# Springboot_samples
+- Springbootを利用したWebアプリケーションの各種サンプル実装を行うサイト．
+- 対象のSpringbootのver.はv2.2.0.RELEASE
+
 ## 環境構築
 - `C:\oit\is_advanced` に以下を展開した
   - amazonjdk11.0.3_7
@@ -45,30 +49,30 @@ server.tomcat.accesslog.directory=logs
 - gradle bootRun を実行するとSpringBootアプリがビルドされ，組み込みTomcatで起動する
   - build/libs/ 以下に作成されるjarを対象に，java -jar ???.jar でもSpringBootWebアプリケーションを起動できる
 
-## Samples
-### templateを利用したhtmlファイルの表示
+# Samples
+## templateを利用したhtmlファイルの表示
 - 参考：https://qiita.com/yama9112/items/ff829561238440437b99
   - http://localhost:8000/sample
 
-### RestControllerを利用したapiの定義と利用(GET)
+## RestControllerを利用したapiの定義と利用(GET)
 - 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
   - 実装：https://github.com/igakilab/springboot_samples/commit/dfb755c75f097ff1ef22293bf97173fc78c53ae3
 - http://localhost:8000/api/hello
   - Classにapiという名前をつけて，メソッドにhelloという名前をつける．↑のURLを呼び出すとhelloと名前をつけたメソッドの返り値が表示される
 
-### Restのパスパラメータ
+## Restのパスパラメータ
 - 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
   - 実装：https://github.com/igakilab/springboot_samples/commit/b653a6ffab85606bc1dec3b67ae960a166e5eaf9
 - http://localhost:8000/api/test/hoge/fuga
   - `@RequestMapping("test/{param1}/{param2}")` とアノテートされたメソッドを呼び出す．メソッドの仮引数にパスパラメータを割り当てられる
 
-### Restのクエリパラメータ
+## Restのクエリパラメータ
 - 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
   - 実装：https://github.com/igakilab/springboot_samples/commit/2cf5f05d2e136a0b7c3be9820164a9c748c1db86
 - http://localhost:8000/api/test?param=hoge
   - `@RequestMapping("test")`なメソッドを呼び出す．クエリパラメータ名は指定がなければ仮引数の名前と同じ
 
-### 複数ユーザによるベーシック認証とユーザ名表示
+## 複数ユーザによるベーシック認証とユーザ名表示
 - 参考
   - https://www.codeflow.site/ja/article/spring-security__get-current-logged-in-username-in-spring-security
   - https://qiita.com/opengl-8080/items/eb3bf3b5301bae398cc2
@@ -76,7 +80,7 @@ server.tomcat.accesslog.directory=logs
 - http://localhost:8000/hello
   - タイムリーフの使い方，ログインユーザ名の取得方法
 
-### 特定ページへのベーシック認証をかけない設定
+## 特定ページへのベーシック認証をかけない設定
 - 参考
   - https://intellectual-curiosity.tokyo/2019/04/14/spring-boot-2-x-%E3%81%A7basic%E8%AA%8D%E8%A8%BC%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/
   - 実装：https://github.com/igakilab/springboot_samples/commit/201f416fca7223566158586a98664deffc3fcc33
