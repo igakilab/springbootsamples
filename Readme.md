@@ -52,7 +52,8 @@ server.tomcat.accesslog.directory=logs
 # Samples
 ## templateを利用したhtmlファイルの表示
 - 参考：https://qiita.com/yama9112/items/ff829561238440437b99
-  - http://localhost:8000/sample
+  - 実装：https://github.com/igakilab/springboot_samples/tree/9250ee3354163ac534e3d4b62879a72a5cab42e4
+- http://localhost:8000/sample
 
 ## RestControllerを利用したapiの定義と利用(GET)
 - 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
