@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>SpringBootGetUsername</title>
+</head>
+
+<body>
+  <!--actionはタイムリーフの形式で書かないと403エラーになる-->
+  <form th:action="@{/result}" method="post">
+    <input type="number" name="id">
+    <button type="submit">送信</button>
+  </form>
+  <div th:if="${id}">
+    <!--idの値がある場合に表示する-->
+    <h1>GET [[${id}]]</h1>
+  </div>
+</body>
+
+</html>
