@@ -99,3 +99,14 @@ server.tomcat.accesslog.directory=logs
   - フィールドに数字を入れ，送信ボタンを押すと，フォームの下にGet 5等の数字が表示される．
   - result.htmlに対するGET/POST両方のコントローラを作成し，処理を実施
   - タイムリーフを利用し，値があるときとないとで表示を変える条件分岐もサンプル実装してみた
+
+## DBの初期化及びデータ取得処理
+- 参考
+  - https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478
+  - https://teratail.com/questions/99983
+    - 日本語の取り扱いについて
+  - 実装：https://github.com/igakilab/springboot_samples/commit/e27de415578525a00f538f80b3a4f0478ac149ce
+- 実行するとgradle bootRunを実行したターミナルに，schema.sqlを通じてcreateされたテーブルにdata.sqlから登録されたデータが表示される．
+- Fruits.javaのinterfaceを利用してFruitsMapper.javaでDBから取得するselect文を書いている
+- apprication.propertiesでは，data.sqlがUTF-8なので，同じくUTF-8の利用を指定している（これがないともじバケる）
+- H2DBを利用しており，データソースの設定はすべてspringbootが自動的にやってくれている
