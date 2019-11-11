@@ -119,7 +119,29 @@ server.tomcat.accesslog.directory=logs
   - https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478
   - https://www.shookuro.com/entry/2017/05/02/120110
   - ModelMapへの独自クラスのオブジェクトを追加する方法
-- 実装：https://github.com/igakilab/springboot_samples/commit/583faf57e3791cdbe22324d3070589ff71da4fac
+  - 実装：https://github.com/igakilab/springboot_samples/commit/583faf57e3791cdbe22324d3070589ff71da4fac
 - http://localhost:8000/addFruits
   - DBに登録されたフルーツのデータをGET Requestに応じてタイムリーフを利用して表示する
   - 2種類の方法でHTMLにDBに登録されたフルーツの情報が表示される．
+
+## フォームでPOSTしたデータをDBに登録し，同じページに登録した内容を表示する方法
+- 参考：
+  - https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478#mybatisdemoapplication%E3%81%AE%E4%BF%AE%E6%AD%A3%E3%81%A8spring-boot%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E8%B5%B7%E5%8B%95
+    - insert及びinsert時のkeyのauto incrementに関するサンプル
+  - 実装：https://github.com/igakilab/springboot_samples/commit/86e82e938c8d242192f656ea73f04a32f94a35e6
+- http://localhost:8000/addFruits
+  - 表示するとid1に登録されているフルーツが表示される
+  - フォームに入力して「送信」すると，id2として（auto increment）送信した内容がDBに登録され，それがそのままフルーツ2としてhtmlにフルーツ1の代わりに表示される
+
+## DBから複数の値をArrayListで取得し，htmlで表示するサンプル
+- 参考：
+  -
+  - https://qiita.com/NagaokaKenichi/items/c6d1b76090ef5ef39482#%E7%B9%B0%E3%82%8A%E8%BF%94%E3%81%97%E3%83%AB%E3%83%BC%E3%83%97
+    - タイムリーフを利用した繰り返し処理及びステータス変数について参考にした
+    - 繰り返しの単位がtdになっていたので，行単位で繰り返しを行うように実装では修正した．
+  - 実装：https://github.com/igakilab/springboot_samples/commit/480b15ac815e816086aec744c1cb9ce64df160b1
+- http://localhost:8000/addFruits
+  - まずはこれを開いて，何でも良いので新しいフルーツの名前と数をDBに追加する
+- http://localhost:8000/showFruitsList
+  - 複数のフルーツがDBに登録された状態でこれを開くと，フルーツの情報が一行ずつ表示される
+  - タイムリーフを利用したfor-each文とステータス変数を使った情報の表示を行っている
