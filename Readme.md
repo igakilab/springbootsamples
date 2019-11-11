@@ -121,4 +121,5 @@ server.tomcat.accesslog.directory=logs
   - ModelMapへの独自クラスのオブジェクトを追加する方法
 - 実装：https://github.com/igakilab/springboot_samples/commit/583faf57e3791cdbe22324d3070589ff71da4fac
 - http://localhost:8000/addFruits
+  - DBに登録されたフルーツのデータをGET Requestに応じてタイムリーフを利用して表示する
   - 2種類の方法でHTMLにDBに登録されたフルーツの情報が表示される．
