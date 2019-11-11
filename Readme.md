@@ -110,3 +110,4 @@ server.tomcat.accesslog.directory=logs
 - Fruits.javaのinterfaceを利用してFruitsMapper.javaでDBから取得するselect文を書いている
 - apprication.propertiesでは，data.sqlがUTF-8なので，同じくUTF-8の利用を指定している（これがないともじバケる）
 - H2DBを利用しており，データソースの設定はすべてspringbootが自動的にやってくれている
+- CommandLineRunnerを利用してみた．SpringBoot起動時に呼び出してくれるらしい．DB等の初期化処理などに使えるっぽい．
