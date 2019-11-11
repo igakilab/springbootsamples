@@ -3,6 +3,7 @@ package jp.ac.igakilab.springbootsamples.controller;
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,7 @@ public class FruitsController {
   }
 
   @PostMapping("/addFruits")
+  @Transactional
   public String sendFruitsForm(ModelMap model, Fruits fruit2) {
     this.fruitsMapper.insert(fruit2);
     fruit2 = fruitsMapper.select(2);// id 2に登録されているフルーツを取得
