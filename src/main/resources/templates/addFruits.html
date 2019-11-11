@@ -7,23 +7,34 @@
 </head>
 
 <body>
+  <form th:action="@{/addFruits}" th:object="${fruit2}" method="POST">
+    名前：<input type="text" th:field="*{name}">
+    数：<input type="number" th:field="*{num}">
+    <input type="submit" value="送信">
+  </form>
   <h1>Hello Fruits</h1>
   <!--方法1-->
-  <p th:text="${fruit.name}"></p>
-  <p th:text="${fruit.num}"></p>
-  <p th:text="${fruit.weight}"></p>
-  <p th:text="${fruit.details}"></p>
-  <p th:text="${fruit.sent}"></p>
-
+  <div th:if="${fruit.name}">
+    <p>フルーツ1</p>
+    <p th:text="${fruit.name}"></p>
+    <p th:text="${fruit.num}"></p>
+    <p th:text="${fruit.weight}"></p>
+    <p th:text="${fruit.details}"></p>
+    <p th:text="${fruit.sent}"></p>
+  </div>
   <!--方法2-->
   <!--親となるタグでobject名を宣言すると，そのオブジェクト内のフィールドを子となるタグでは下記フォーマットで参照できるようになる-->
-  <div th:object="${fruit}">
-    <p th:text="*{name}">
-    </p>
-    <p th:text="*{num}"></p>
-    <p th:text="*{weight}"></p>
-    <p th:text="*{details}"></p>
-    <p th:text="*{sent}"></p>
+  <div th:if="${fruit2.name}">
+    <!--名前の登録されたフルーツがあった場合にのみ表示する-->
+    <p>フルーツ2</p>
+    <div th:object="${fruit2}">
+      <p th:text="*{name}">
+      </p>
+      <p th:text="*{num}"></p>
+      <p th:text="*{weight}"></p>
+      <p th:text="*{details}"></p>
+      <p th:text="*{sent}"></p>
+    </div>
   </div>
 </body>
 
