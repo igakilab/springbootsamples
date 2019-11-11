@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>Fruits</title>
+</head>
+
+<body>
+  <h1>Hello Fruits</h1>
+  <!--方法1-->
+  <p th:text="${fruit.name}"></p>
+  <p th:text="${fruit.num}"></p>
+  <p th:text="${fruit.weight}"></p>
+  <p th:text="${fruit.details}"></p>
+  <p th:text="${fruit.sent}"></p>
+
+  <!--方法2-->
+  <!--親となるタグでobject名を宣言すると，そのオブジェクト内のフィールドを子となるタグでは下記フォーマットで参照できるようになる-->
+  <div th:object="${fruit}">
+    <p th:text="*{name}">
+    </p>
+    <p th:text="*{num}"></p>
+    <p th:text="*{weight}"></p>
+    <p th:text="*{details}"></p>
+    <p th:text="*{sent}"></p>
+  </div>
+</body>
+
+</html>
