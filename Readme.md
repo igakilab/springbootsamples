@@ -105,9 +105,20 @@ server.tomcat.accesslog.directory=logs
   - https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478
   - https://teratail.com/questions/99983
     - 日本語の取り扱いについて
+  - https://mybatis.org/spring/ja/mappers.html
+    - MapperクラスのオブジェクトはSpringBootが自動的に作成してくれるので，必要なときにMapperクラスのオブジェクトを引数に持つコンストラクタを定義すれば良い
   - 実装：https://github.com/igakilab/springboot_samples/commit/e27de415578525a00f538f80b3a4f0478ac149ce
 - 実行するとgradle bootRunを実行したターミナルに，schema.sqlを通じてcreateされたテーブルにdata.sqlから登録されたデータが表示される．
 - Fruits.javaのinterfaceを利用してFruitsMapper.javaでDBから取得するselect文を書いている
 - apprication.propertiesでは，data.sqlがUTF-8なので，同じくUTF-8の利用を指定している（これがないともじバケる）
 - H2DBを利用しており，データソースの設定はすべてspringbootが自動的にやってくれている
 - CommandLineRunnerを利用してみた．SpringBoot起動時に呼び出してくれるらしい．DB等の初期化処理などに使えるっぽい．
+
+## DBの値を取得し，GETでHTMLに渡して表示する方法
+- 参考：
+  - https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478
+  - https://www.shookuro.com/entry/2017/05/02/120110
+  - ModelMapへの独自クラスのオブジェクトを追加する方法
+- 実装：https://github.com/igakilab/springboot_samples/commit/583faf57e3791cdbe22324d3070589ff71da4fac
+- http://localhost:8000/addFruits
+  - 2種類の方法でHTMLにDBに登録されたフルーツの情報が表示される．
