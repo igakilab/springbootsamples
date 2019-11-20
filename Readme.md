@@ -9,7 +9,8 @@
   - PortableGit-2.23.0-64
     - bash_profile.sh にjava及びgradle/binへのPATHを通し，$HOME(${USER}/oithomes/advanced/)を設定する
     - /usr/local/bin/に必要なコマンドを追加する
-  - vscode-portable-win64-1.39.2-20
+  - vscode-portable-win64-1.40.1-22
+    - https://portapps.io/app/vscode-portable/
     - settings.jsonを設定
       - C:\oit\is_advanced\vscode-portable-win64-1.39.2-20\data\appdata\Code\User\settings.json
     - bash.exeをシェルに設定
@@ -129,6 +130,8 @@ server.tomcat.accesslog.directory=logs
   - https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478#mybatisdemoapplication%E3%81%AE%E4%BF%AE%E6%AD%A3%E3%81%A8spring-boot%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E8%B5%B7%E5%8B%95
     - insert及びinsert時のkeyのauto incrementに関するサンプル
   - 実装：https://github.com/igakilab/springboot_samples/commit/86e82e938c8d242192f656ea73f04a32f94a35e6
+    - ↑実装時は漏れていたが，↓のように@TransactionalをDBに書き込みを行う場合はつけておくと良いらしい（失敗した際に自動でロールバックしてくれる）
+    - https://github.com/igakilab/springboot_samples/commit/28b49a47e0a87387a19b8a9dc63c05b8fa852af7
 - http://localhost:8000/addFruits
   - 表示するとid1に登録されているフルーツが表示される
   - フォームに入力して「送信」すると，id2として（auto increment）送信した内容がDBに登録され，それがそのままフルーツ2としてhtmlにフルーツ1の代わりに表示される
