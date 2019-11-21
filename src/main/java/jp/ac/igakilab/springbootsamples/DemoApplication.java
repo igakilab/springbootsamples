@@ -3,12 +3,14 @@ package jp.ac.igakilab.springbootsamples;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.Transactional;
 
 import jp.ac.igakilab.springbootsamples.domain.Fruits;
 import jp.ac.igakilab.springbootsamples.mapper.FruitsMapper;
 
 @SpringBootApplication
+@EnableAsync
 public class DemoApplication implements CommandLineRunner {
 
   public static void main(String[] args) {
