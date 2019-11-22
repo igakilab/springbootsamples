@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <p id="p1"></p>
+  <p id="p2"></p>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  $("#p1").text("");
+  $("#p2").text("");
+  $.ajax({
+    url: "http://localhost:8000/api/streaming?eventNumber=5&intervalSec=1",
+    type: "GET",
+    contentType: "application/json",
+  }).done(function (data, textStatus, jqXHR) {
+    $("#p1").text(jqXHR.status); //例：200
+    $("#p2").text(data);
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    $("#p1").text(jqXHR.status); //例：404
+  }).always(function () {
+  });
+</script>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <p id="p1"></p>
+  <p id="p2"></p>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  $("#sse").text("");
+  var sse = new EventSource('http://localhost:8000/api/streaming?eventNumber=5&intervalSec=1');
+  $("#p2").text("");
+  sse.onmessage = function (evt) {
+    var el = document.getElementById('sse');
+    el.appendChild(document.createTextNode(evt.data));
+    el.appendChild(document.createElement('br'));
+    // java側でemitter.complete()が呼ばれていた場合，js側でsse.close();を呼び出すまでイベントが発生し続ける．
+  };
+</script>
+<div id="sse"></div>
+
+</html>
