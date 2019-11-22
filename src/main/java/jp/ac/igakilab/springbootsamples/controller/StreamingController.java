@@ -28,7 +28,7 @@ public class StreamingController {
   // -N: No buffer
   @GetMapping("/api/streaming")
   public SseEmitter streaming(@RequestParam(defaultValue = "1") long eventNumber, int intervalSec)
-      throws IOException, InterruptedException {
+      throws InterruptedException {
     System.out.println("Start get.");
 
     SseEmitter emitter = new SseEmitter();

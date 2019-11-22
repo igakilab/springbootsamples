@@ -18,8 +18,12 @@
     var el = document.getElementById('sse');
     el.appendChild(document.createTextNode(evt.data));
     el.appendChild(document.createElement('br'));
-    // java側でemitter.complete()が呼ばれていた場合，js側でsse.close();を呼び出すまでイベントが発生し続ける．
+    // java側でemitter.complete()が呼ばれていた場合，js側でsse.close();を呼び出すまで再接続し続ける．
   };
+  sse.onerror = function (evt) {
+    console.log("error!!");
+    sse.close();
+  }
 </script>
 <div id="sse"></div>
 

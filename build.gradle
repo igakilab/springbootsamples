@@ -15,14 +15,19 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'org.springframework.boot:spring-boot-starter-jetty'
+
   implementation 'org.springframework.boot:spring-boot-starter-security'
   implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
   implementation 'com.h2database:h2'
-  //implementation 'org.springframework.boot:spring-boot-devtools' //コード更新時にアプリケーションをリロードする
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 }
+configurations {
+  implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+}
+
 
 test {
 	useJUnitPlatform()

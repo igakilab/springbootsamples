@@ -10,8 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @Component
 public class AsyncHelper {
   @Async
-  public void streaming(SseEmitter emitter, long eventNumber, int intervalSec)
-      throws InterruptedException, IOException {
+  public void streaming(SseEmitter emitter, long eventNumber, int intervalSec) throws InterruptedException {
     System.out.println("Start Async processing.");
 
     for (int i = 1; i <= eventNumber; i++) {
@@ -21,7 +20,12 @@ public class AsyncHelper {
       fruits.setNum(i);
       fruits.setWeight(i * 25.5);
       // emitter.send("msg" + i + "\r\n");
-      emitter.send(fruits);
+      try {
+        emitter.send(fruits);
+      } catch (IOException e) {
+        System.out.println("IOException!");
+        break;
+      }
       System.out.println("java:msg" + i);
     }
 

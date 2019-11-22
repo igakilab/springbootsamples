@@ -1,3 +1,30 @@
+<!-- TOC -->
+
+- [Springboot_samples](#springboot_samples)
+  - [環境構築](#環境構築)
+  - [セットアップ](#セットアップ)
+  - [application.properties](#applicationproperties)
+    - [組み込みTomcatのログ設定](#組み込みtomcatのログ設定)
+  - [SpringBootWebアプリの実行方法](#springbootwebアプリの実行方法)
+- [Samples](#samples)
+  - [templateを利用したhtmlファイルの表示](#templateを利用したhtmlファイルの表示)
+  - [RestControllerを利用したapiの定義と利用(GET)](#restcontrollerを利用したapiの定義と利用get)
+  - [Restのパスパラメータ](#restのパスパラメータ)
+  - [Restのクエリパラメータ](#restのクエリパラメータ)
+  - [複数ユーザによるベーシック認証とユーザ名表示](#複数ユーザによるベーシック認証とユーザ名表示)
+  - [特定ページへのベーシック認証をかけない設定](#特定ページへのベーシック認証をかけない設定)
+  - [フォームを利用してPOSTするサンプル](#フォームを利用してpostするサンプル)
+  - [DBの初期化及びデータ取得処理](#dbの初期化及びデータ取得処理)
+  - [DBの値を取得し，GETでHTMLに渡して表示する方法](#dbの値を取得しgetでhtmlに渡して表示する方法)
+  - [フォームでPOSTしたデータをDBに登録し，同じページに登録した内容を表示する方法](#フォームでpostしたデータをdbに登録し同じページに登録した内容を表示する方法)
+  - [DBから複数の値をArrayListで取得し，htmlで表示するサンプル](#dbから複数の値をarraylistで取得しhtmlで表示するサンプル)
+  - [SseEmitterとEventSourceを利用して非同期呼び出しを行うサンプル](#sseemitterとeventsourceを利用して非同期呼び出しを行うサンプル)
+    - [ポイント(StreamingController)](#ポイントstreamingcontroller)
+    - [ポイント(AsyncHelper)](#ポイントasynchelper)
+    - [ポイント(ajaxFruits2.html)](#ポイントajaxfruits2html)
+
+<!-- /TOC -->
+
 # Springboot_samples
 - Springbootを利用したWebアプリケーションの各種サンプル実装を行うサイト．
 - 対象のSpringbootのver.はv2.2.0.RELEASE
@@ -5,14 +32,38 @@
 ## 環境構築
 - `C:\oit\is_advanced` に以下を展開した
   - amazonjdk11.0.3_7
-  - gradle-5.6.3
+  - gradle-6.0.1
   - PortableGit-2.23.0-64
     - bash_profile.sh にjava及びgradle/binへのPATHを通し，$HOME(${USER}/oithomes/advanced/)を設定する
+      - それぞれ /usr/local/bin/内にコマンドの形で設定した
     - /usr/local/bin/に必要なコマンドを追加する
   - vscode-portable-win64-1.40.1-22
     - https://portapps.io/app/vscode-portable/
     - settings.jsonを設定
-      - C:\oit\is_advanced\vscode-portable-win64-1.39.2-20\data\appdata\Code\User\settings.json
+      - C:\oit\is_advanced\vscode-portable-win64-1.40.1-20\data\appdata\Code\User\settings.json
+      - bash.exeの設定は今回は必ずしも不要（デバッガ利用時にこの設定を見るだけなので）
+```json
+{
+  "terminal.integrated.shell.windows": "C:\\oit\\is_advanced\\PortableGit-2.23.0-64\\bin\\bash.exe",
+  "terminal.integrated.env.windows": {
+    "MSYSTEM": "MINGW64",
+    "CHERE_INVOKING": "1"
+  },
+  "terminal.integrated.shellArgs.windows": [
+    "--login",
+    "-i"
+  ],
+    "update.enableWindowsBackgroundUpdates": false,
+    "update.mode": "none",
+    "update.showReleaseNotes": false,
+    "extensions.autoUpdate": false,
+    "extensions.autoCheckUpdates": false,
+    "extensions.ignoreRecommendations": true,
+    "extensions.showRecommendationsOnlyOnDemand": true,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+}
+```
     - bash.exeをシェルに設定
     - 以下の拡張をインストール
       - Debugger for Java
@@ -30,7 +81,7 @@
     - Spring Web
     - thymeleaf
     - mybatis
-    - h2(未定)
+    - h2
 - .gitignore作成
 - git init, git push
 
@@ -49,6 +100,24 @@ server.tomcat.accesslog.directory=logs
 ## SpringBootWebアプリの実行方法
 - gradle bootRun を実行するとSpringBootアプリがビルドされ，組み込みTomcatで起動する
   - build/libs/ 以下に作成されるjarを対象に，java -jar ???.jar でもSpringBootWebアプリケーションを起動できる
+- 今回はjettyに変更したいので，build.gradleのdependenciesとconfigurationsを以下のように修正
+```gradle
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'org.springframework.boot:spring-boot-starter-jetty'
+
+  implementation 'org.springframework.boot:spring-boot-starter-security'
+  implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
+  implementation 'com.h2database:h2'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+configurations {
+  implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+}
+```
 
 # Samples
 ## templateを利用したhtmlファイルの表示
@@ -161,7 +230,7 @@ server.tomcat.accesslog.directory=logs
   - 普通のAjax呼び出しだが，非同期にはならず，すべての処理が終了してから画面が更新される．非推奨だが，一般的な書き方ということで（同期呼び出しならこれでいい）．
 - 確認4: http://localhost:8000/ajaxFruits2.html
   - EventSourceを利用．非同期に呼び出しが行われ，画面も非同期に更新される．
-  - 一度ページを表示すると，StreamingControllerの該当するstreamingメソッドが何度も呼び出されるっぽい．
+  - 一度ページを表示すると，StreamingControllerの該当するstreamingメソッドが何度も呼び出されるっぽい．接続が切れると自動的に再接続してるのかも．
 ### ポイント(StreamingController)
 - SseEmitterのところはResponseBodyEmitterでもいける．curlでの実行結果は同様だが，JSで呼び出す際に，↓のようなエラーがJS側で発生してしまう
   - `EventSource's response has a MIME type ("text/plain") that is not "text/event-stream". Aborting the connection.`
@@ -187,6 +256,9 @@ server.tomcat.accesslog.directory=logs
 - emitter.complete()
   - これを呼び出すことで，emitterを利用して呼び出し処理が明示的に終了される．多分呼び出さないとemitterが終了されないままで，再利用できなくなる気がする．
   - また，これが呼び出されていると，JS側でEventSourceに指定されたapiが何度も呼び出されて，streamingメソッドも何度も呼び出されるが，complete()していないと，streamingメソッドは再度呼び出されることはなくなる（正確には呼ばれていてもemitterが機能しない？）．
+- 発生する例外について
+  - asyncHelper.streaming()内の処理を実行している最中にブラウザが終了する等でクライアントとの接続が切れた場合，以下の例外が発生する．
+    - `java.lang.IllegalStateException: Calling [asyncError()] is not valid for a request with Async state [MUST_DISPATCH]`
 ### ポイント(ajaxFruits2.html)
 - EventSource()
   - 参考：https://uhyohyo.net/javascript/13_2.html
@@ -195,4 +267,38 @@ server.tomcat.accesslog.directory=logs
   - Server-Sent EventsをJSで受け取るために使う．URLを引数に与えると，emitter.send()で送信された内容を送信されるたびにon.messageで受け取ることができる
 - sse.onmessage
   - EventSourceからメッセージが送られてきたら（MessageEvent)，function(evt)を処理する．
-  - EventSourceはサーバから接続が切断されても自動的に再接続が行われるらしい．回避しようと思ったら，処理終了時にsse.close()を呼び出すと良い．
+  - EventSourceはサーバから接続が切断されても自動的に再接続が行われるらしい．回避しようと思ったら，処理終了時や例外発生時（切断時に例外が発生する）にsse.close()を呼び出すと良い．
+  ```javascript
+    sse.onerror = function (evt) {
+    console.log("error!!");
+    sse.close();
+  }
+  ```
+  - ブラウザ終了時
+    - 組み込みTomcatの場合は`java.lang.IllegalStateException: Calling [asyncError()] is not valid for a request with Async state [MUST_DISPATCH]`という例外が発生する．これはcatchしてログに表示しないようにするのは今の時点ではやり方がわからない
+    - 組み込みjettyの場合は`org.eclipse.jetty.io.EofException: null` という例外が発生する．こちらの場合は，`AsyncHelper.java`の`streaming()`メソッド内部の`emitter.send()`でIOExceptionが発生するので，下記のようにcatchしてやれば切断時の処理を正しく実装できる
+```java
+  @Async
+  public void streaming(SseEmitter emitter, long eventNumber, int intervalSec) throws InterruptedException {
+    System.out.println("Start Async processing.");
+
+    for (int i = 1; i <= eventNumber; i++) {
+      TimeUnit.SECONDS.sleep(intervalSec);
+      Fruits fruits = new Fruits();
+      fruits.setName("メロン");
+      fruits.setNum(i);
+      fruits.setWeight(i * 25.5);
+      try {
+        emitter.send(fruits);
+      } catch (IOException e) {
+        System.out.println("IOException!");
+        break;
+      }
+      System.out.println("java:msg" + i);
+    }
+
+    emitter.complete();
+
+    System.out.println("End Async processing.");
+  }
+```
