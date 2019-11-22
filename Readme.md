@@ -21,7 +21,7 @@
       - Japanese Language Pack
       - Language Support for Java
       - Spring Initializr Java Support
-      - Spring Boot Tools:これインストールしたらJava language supportのSuggestがうまく動かなくなった
+      - Spring Boot Tools:これインストールしたらJava language supportのSuggestがうまく動かなくなったので削除した
 
 ## セットアップ
 - 表示->コマンドパレット，を選択し，Spring Initializr:Generate a Gradle Project を実行する
@@ -138,7 +138,6 @@ server.tomcat.accesslog.directory=logs
 
 ## DBから複数の値をArrayListで取得し，htmlで表示するサンプル
 - 参考：
-  -
   - https://qiita.com/NagaokaKenichi/items/c6d1b76090ef5ef39482#%E7%B9%B0%E3%82%8A%E8%BF%94%E3%81%97%E3%83%AB%E3%83%BC%E3%83%97
     - タイムリーフを利用した繰り返し処理及びステータス変数について参考にした
     - 繰り返しの単位がtdになっていたので，行単位で繰り返しを行うように実装では修正した．
@@ -148,3 +147,52 @@ server.tomcat.accesslog.directory=logs
 - http://localhost:8000/showFruitsList
   - 複数のフルーツがDBに登録された状態でこれを開くと，フルーツの情報が一行ずつ表示される
   - タイムリーフを利用したfor-each文とステータス変数を使った情報の表示を行っている
+
+## SseEmitterとEventSourceを利用して非同期呼び出しを行うサンプル
+- 参考：
+  - https://qiita.com/kazuki43zoo/items/53b79fe91c41cc5c2e59
+  - 実装：https://github.com/igakilab/springboot_samples/commit/8149268a777e03bce7dfda0c6bba3ef28df52ffe
+- 確認1: `curl -i -s -N http://localhost:8000/api/streaming?eventNumber=5\&intervalSec=1`
+  - `-i`はHTTPヘッダを表示するオプション， `-s`はダウンロード関連の表示を省略するオプション`-N`はバッファを利用しないオプション（このオプションがないとレスポンスが非同期じゃなくまとめて最後に来るようになる）
+  - StreamingControllerからAsyncHelperのstreamingメソッドが非同期に呼び出されて，レスポンスが非同期に返ってくる
+- 確認2: `curl -i -s -N http://localhost:8000/api/sse`
+  - SseController内の一部の処理が非同期に呼び出される(L28-L43)．ただ，一部を非同期にするためにConcurrentパッケージのExecutorServiceが必要なのでおすすめしない
+- 確認3: http://localhost:8000/ajaxFruits.html
+  - 普通のAjax呼び出しだが，非同期にはならず，すべての処理が終了してから画面が更新される．非推奨だが，一般的な書き方ということで（同期呼び出しならこれでいい）．
+- 確認4: http://localhost:8000/ajaxFruits2.html
+  - EventSourceを利用．非同期に呼び出しが行われ，画面も非同期に更新される．
+  - 一度ページを表示すると，StreamingControllerの該当するstreamingメソッドが何度も呼び出されるっぽい．
+### ポイント(StreamingController)
+- SseEmitterのところはResponseBodyEmitterでもいける．curlでの実行結果は同様だが，JSで呼び出す際に，↓のようなエラーがJS側で発生してしまう
+  - `EventSource's response has a MIME type ("text/plain") that is not "text/event-stream". Aborting the connection.`
+  - これはResponseBodyEmitterだとtext/plainでメッセージが返るため．SseEmitterだとtext/event-streamで返るのでこちらを使うと良い
+- @RestController
+  - 参考：https://qiita.com/TEBASAKI/items/267c261db17f178e33eb#controller-%E3%82%AF%E3%83%A9%E3%82%B9
+  - 戻り値をそのままJS側で受け取る場合は@RestControllerで良い．今回の場合はemitter.send()の引数がそのままJSに渡される
+- @Autowired
+  - 対象クラスのオブジェクトをnewして割り当ててくれる．
+  - ただし，対象クラスに@Component とアノテーションがついていないと駄目．
+  - この例の場合，AsyncHelperクラスに@Componentがついているので，@Autowiredで割当が行われる．
+  - なお，対象クラスを非同期に呼び出したい場合は@Autowiredが必須っぽい．
+- L35で呼び出しているasyncHelper.streaming()は非同期に呼び出される．すなわち，L35の処理が終了する前にL37が呼び出される．
+  - gradle bootRunを実行したターミナルを確認すると分かる
+  - 非同期に呼び出したい別クラスのメソッドには，引数に必ずSseEmitterクラスのオブジェクトを渡す必要がある．また，呼び出し元メソッド(この例の場合はStreamingController.streaming())の返り値をSseEmitterクラスのオブジェクトにする必要がある．
+### ポイント(AsyncHelper)
+- @Component
+  - このオブジェクトを利用するStreamingControllerで@Autowiredするために必要な設定．要はnewをSpringbootにやってもらうため．
+- @Async
+  - 非同期呼び出しをしたいメソッド（要するに指定したメソッドが終了するのを呼び出し元で待たなくて良い）にアノテーションとして付与する
+- emitter.send()
+  - 対象メソッドの引数に与えられたSseEmitterにsend()で引数として他クラスのオブジェクトや文字列を与えることで，javascript側でオブジェクトの場合はjsonオブジェクトとして，文字列の場合は文字列として受け取ることができる．
+- emitter.complete()
+  - これを呼び出すことで，emitterを利用して呼び出し処理が明示的に終了される．多分呼び出さないとemitterが終了されないままで，再利用できなくなる気がする．
+  - また，これが呼び出されていると，JS側でEventSourceに指定されたapiが何度も呼び出されて，streamingメソッドも何度も呼び出されるが，complete()していないと，streamingメソッドは再度呼び出されることはなくなる（正確には呼ばれていてもemitterが機能しない？）．
+### ポイント(ajaxFruits2.html)
+- EventSource()
+  - 参考：https://uhyohyo.net/javascript/13_2.html
+  - 参考：https://www.codeflow.site/ja/article/spring-mvc-sse-streams
+  - 参考：https://developer.mozilla.org/ja/docs/Web/API/Server-sent_events/Using_server-sent_events
+  - Server-Sent EventsをJSで受け取るために使う．URLを引数に与えると，emitter.send()で送信された内容を送信されるたびにon.messageで受け取ることができる
+- sse.onmessage
+  - EventSourceからメッセージが送られてきたら（MessageEvent)，function(evt)を処理する．
+  - EventSourceはサーバから接続が切断されても自動的に再接続が行われるらしい．回避しようと思ったら，処理終了時にsse.close()を呼び出すと良い．
