@@ -5,23 +5,27 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Component
 public class AsyncHelper {
-  // ...
   @Async
-  public void streaming(ResponseBodyEmitter emitter, long eventNumber, long intervalSec)
-      throws IOException, InterruptedException {
+  public void streaming(SseEmitter emitter, long eventNumber, int intervalSec)
+      throws InterruptedException, IOException {
     System.out.println("Start Async processing.");
 
-    for (long i = 1; i <= eventNumber; i++) {
+    for (int i = 1; i <= eventNumber; i++) {
       TimeUnit.SECONDS.sleep(intervalSec);
-      emitter.send("msg" + i + "\r\n");
+      Fruits fruits = new Fruits();
+      fruits.setName("メロン");
+      fruits.setNum(i);
+      fruits.setWeight(i * 25.5);
+      // emitter.send("msg" + i + "\r\n");
+      emitter.send(fruits);
       System.out.println("java:msg" + i);
     }
 
-    emitter.complete();
+    emitter.complete();// これをコメントアウトすると，streamingメソッドは1度だけ呼び出されて終了するが，complete()を呼び出しておくと，streamingメソッドは何回も呼び出される．
 
     System.out.println("End Async processing.");
   }

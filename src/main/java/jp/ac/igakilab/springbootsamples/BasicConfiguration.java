@@ -24,6 +24,6 @@ public class BasicConfiguration extends WebSecurityConfigurerAdapter {
     http.authorizeRequests().antMatchers("/sample").permitAll();
     http.authorizeRequests().antMatchers("/api/streaming").permitAll();
     http.authorizeRequests().antMatchers("/api/sse").permitAll();
-    http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
+    // http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
   }
 }

@@ -22,6 +22,9 @@ public class SseController {
   // curl -i -s -N http://localhost:8000/api/sse
   @RequestMapping(method = RequestMethod.GET)
   public SseEmitter handleSse() {
+    System.out.println("Start get.");
+
+    // SseEmitterはResponseBodyEmitterのサブクラスで、HTTPレスポンスのコンテンツタイプ(text/event-stream)が拡張される(ResponseBodyEmitterの場合とContent-Typeのレスポンスヘッダが異なる)
     SseEmitter emitter = new SseEmitter();
     nonBlockingService.execute(() -> {
       try {
@@ -38,6 +41,8 @@ public class SseController {
         emitter.completeWithError(ex);
       }
     });
+    System.out.println("End get.");
+
     return emitter;
   }
 }
