@@ -89,6 +89,7 @@
 ### 組み込みTomcatのログ設定
 - 参考：https://www.baeldung.com/spring-boot-embedded-tomcat-logs
 - `C:\Users\...\oithomes\advanced\springboot_samples\src\main\resources\application.properties` に以下のようなtomcatのログ設定を追記
+  - jettyにするなら修正必要．参考：https://howtodoinjava.com/spring-boot2/logging/embedded-server-logging-config/
 ```java
 server.tomcat.accesslog.enabled=true
 server.tomcat.basedir=build
