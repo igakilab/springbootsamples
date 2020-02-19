@@ -25,10 +25,9 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
-configurations {
-  implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
-}
-
 test {
 	useJUnitPlatform()
+}
+configurations {
+  implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
 }
