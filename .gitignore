@@ -52,7 +52,7 @@ out/
 *.class
 
 # Log file
-*.log
+*.log*
 
 # Package Files #
 *.jar
