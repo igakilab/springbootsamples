@@ -80,6 +80,9 @@ spring.datasource.sql-script-encoding=UTF-8
 ### 関連するファイル
 - Sample1Controller.java
 - sample1.html
+### 動作確認
+- http://localhost:8000/sample1 にアクセスする
+- HelloWorldと書かれたHTMLがブラウザに表示されればOK
 
 # Samples
 ## templateを利用したhtmlファイルの表示
