@@ -75,11 +75,16 @@ spring.datasource.sql-script-encoding=UTF-8
 
 # Samples
 ## [Sample1]templateを利用したhtmlファイルの表示
+- 特定のURLリクエストに対して静的なhtmlを返すアプリケーション
 ### 参考
 - https://qiita.com/yama9112/items/ff829561238440437b99
 ### 関連するファイル
+- 実装：https://github.com/igakilab/springbootsamples/commit/23ac2c848ae671fe810f6ee09eeb3a805c975b8b
 - Sample1Controller.java
 - sample1.html
+### 関連する機能
+- @Controller
+- @RequestMapping
 ### 動作確認
 - http://localhost:8000/sample1 にアクセスする
 - HelloWorldと書かれたHTMLがブラウザに表示されればOK
