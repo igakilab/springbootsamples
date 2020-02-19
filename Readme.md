@@ -12,10 +12,10 @@
   - Specify project language: Java
   - Input Group Id for your project: jp.ac.oit.is.{チーム名をアルファベット小文字で}
     - 例：jp.ac.oit.is.inudaisuki
-      - スペースや特殊文字を含めないこと(_のみOK)．すべて小文字．
+      - スペースや特殊文字を含めないこと．すべてアルファベット小文字．
   - Input Artifact Id for your project: {アプリ名をアルファベット小文字で}
     - 例：dogland
-    - スペースや特殊文字を含めないこと(_のみOK)．すべて小文字．また，セットアップ初期に作成したフォルダ名と同じにしておくこと．
+    - スペースや特殊文字を含めないこと(_は入力できるが，不具合を誘発することがあるので使わないほうが良い)．すべてアルファベット小文字．また，セットアップ時に作成したフォルダ名と同じにしておくこと．
   - Specify Spring Boot version.: 2.2.4
   - Search for dependencies
     - 以下を選択
@@ -34,12 +34,12 @@
 ### アプリ名等を後で変更したい場合
 - 以下のファイルを修正する
   - settings.gradle
-    - rootProject.name = 'springboot_template' の行の'springboot_template'をアプリ名に変更する．
-    - 小文字アルファベットと_だけから構成されるものにすること（半角スペースや全角文字は不可）
+    - rootProject.name = 'springbootsamples' の行の'springbootsamples'をアプリ名に変更する．
+    - 小文字アルファベットだけから構成されるものにすること（半角スペースや全角文字は不可）
   - build.gradle
     - group = 'jp.ac.oit.igakilab' の行の右側を自分たちのグループ名に変更する．
       - 例：'jp.ac.oit.inudaisuki'
-      - 小文字アルファベットと_だけから構成されるものにすること（半角スペースや全角文字は不可）
+      - 小文字アルファベットだけから構成されるものにすること（半角スペースや全角文字は不可）
     - src\main\java 以下のフォルダ構成とgroup及びrootProject.nameのアプリ名はおなじになるようにしておくこと．src\test\java も同じ
     - 同じくクラスファイルのパッケージの修正も必要
 
