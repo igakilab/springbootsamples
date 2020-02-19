@@ -1,124 +1,82 @@
-<!-- TOC -->
-
-- [Springboot_samples](#springboot_samples)
-  - [環境構築](#環境構築)
-  - [セットアップ](#セットアップ)
-  - [application.properties](#applicationproperties)
-    - [組み込みTomcatのログ設定](#組み込みtomcatのログ設定)
-  - [SpringBootWebアプリの実行方法](#springbootwebアプリの実行方法)
-- [Samples](#samples)
-  - [templateを利用したhtmlファイルの表示](#templateを利用したhtmlファイルの表示)
-  - [RestControllerを利用したapiの定義と利用(GET)](#restcontrollerを利用したapiの定義と利用get)
-  - [Restのパスパラメータ](#restのパスパラメータ)
-  - [Restのクエリパラメータ](#restのクエリパラメータ)
-  - [複数ユーザによるベーシック認証とユーザ名表示](#複数ユーザによるベーシック認証とユーザ名表示)
-  - [特定ページへのベーシック認証をかけない設定](#特定ページへのベーシック認証をかけない設定)
-  - [フォームを利用してPOSTするサンプル](#フォームを利用してpostするサンプル)
-  - [DBの初期化及びデータ取得処理](#dbの初期化及びデータ取得処理)
-  - [DBの値を取得し，GETでHTMLに渡して表示する方法](#dbの値を取得しgetでhtmlに渡して表示する方法)
-  - [フォームでPOSTしたデータをDBに登録し，同じページに登録した内容を表示する方法](#フォームでpostしたデータをdbに登録し同じページに登録した内容を表示する方法)
-  - [DBから複数の値をArrayListで取得し，htmlで表示するサンプル](#dbから複数の値をarraylistで取得しhtmlで表示するサンプル)
-  - [SseEmitterとEventSourceを利用して非同期呼び出しを行うサンプル](#sseemitterとeventsourceを利用して非同期呼び出しを行うサンプル)
-    - [ポイント(StreamingController)](#ポイントstreamingcontroller)
-    - [ポイント(AsyncHelper)](#ポイントasynchelper)
-    - [ポイント(ajaxFruits2.html)](#ポイントajaxfruits2html)
-
-<!-- /TOC -->
-
 # Springboot_samples
 - Springbootを利用したWebアプリケーションの各種サンプル実装を行うサイト．
-- 対象のSpringbootのver.はv2.2.0.RELEASE
+- 対象のSpringbootのver.はv2.4.0.RELEASE
 
 ## 環境構築
-- `C:\oit\is_advanced` に以下を展開した
-  - amazonjdk11.0.3_7
-  - gradle-6.0.1
-  - PortableGit-2.23.0-64
-    - bash_profile.sh にjava及びgradle/binへのPATHを通し，$HOME(${USER}/oithomes/advanced/)を設定する
-      - それぞれ /usr/local/bin/内にコマンドの形で設定した
-    - /usr/local/bin/に必要なコマンドを追加する
-  - vscode-portable-win64-1.40.1-22
-    - https://portapps.io/app/vscode-portable/
-    - settings.jsonを設定
-      - C:\oit\is_advanced\vscode-portable-win64-1.40.1-20\data\appdata\Code\User\settings.json
-      - bash.exeの設定は今回は必ずしも不要（デバッガ利用時にこの設定を見るだけなので）
-```json
-{
-  "terminal.integrated.shell.windows": "C:\\oit\\is_advanced\\PortableGit-2.23.0-64\\bin\\bash.exe",
-  "terminal.integrated.env.windows": {
-    "MSYSTEM": "MINGW64",
-    "CHERE_INVOKING": "1"
-  },
-  "terminal.integrated.shellArgs.windows": [
-    "--login",
-    "-i"
-  ],
-    "update.enableWindowsBackgroundUpdates": false,
-    "update.mode": "none",
-    "update.showReleaseNotes": false,
-    "extensions.autoUpdate": false,
-    "extensions.autoCheckUpdates": false,
-    "extensions.ignoreRecommendations": true,
-    "extensions.showRecommendationsOnlyOnDemand": true,
-    "editor.suggestSelection": "first",
-    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
-}
-```
-    - bash.exeをシェルに設定
-    - 以下の拡張をインストール
-      - Debugger for Java
-      - EvilInspector
-      - Gradle Language Support
-      - Japanese Language Pack
-      - Language Support for Java
-      - Spring Initializr Java Support
-      - Spring Boot Tools:これインストールしたらJava language supportのSuggestがうまく動かなくなったので削除した
+- 必要な開発環境は下記を参照して構築すること
+- https://github.com/igakilab/byod.zip_isdev
 
-## セットアップ
+### Spring Initializrを利用したセットアップ
+- 作成したいアプリの名前でフォルダを作成し，そのフォルダをvscodeで開く
 - 表示->コマンドパレット，を選択し，Spring Initializr:Generate a Gradle Project を実行する
-  - group id等を適当に入力する
-  - 以下の依存関係を導入
+  - Specify project language: Java
+  - Input Group Id for your project: jp.ac.oit.is.{チーム名をアルファベット小文字で}
+    - 例：jp.ac.oit.is.inudaisuki
+      - スペースや特殊文字を含めないこと(_のみOK)．すべて小文字．
+  - Input Artifact Id for your project: {アプリ名をアルファベット小文字で}
+    - 例：dogland
+    - スペースや特殊文字を含めないこと(_のみOK)．すべて小文字．また，セットアップ初期に作成したフォルダ名と同じにしておくこと．
+  - Specify Spring Boot version.: 2.2.4
+  - Search for dependencies
+    - 以下を選択
     - Spring Web
-    - thymeleaf
-    - mybatis
-    - h2
+    - Thymeleaf
+    - Mybatis Framework
+    - H2 Database
+    - Spring Security
+  - フォルダの選択を行うダイヤログが表示されるので，現在のフォルダのひとつ上（通常is_dev20などになる）を指定して，springbootのためのフォルダを作成させる．
+    - このとき，すでにあるフォルダを上書き(overwrite)してよいか問い合わせがあるので，OKすること．
+  - Successfully Generatedと出ればOK．
 - .gitignore作成
+- build.gradleのdependenciesに↓を追加（tomcatでなくjettyを利用する設定）
+  - `implementation 'org.springframework.boot:spring-boot-starter-jetty'`
+
+### アプリ名等を後で変更したい場合
+- 以下のファイルを修正する
+  - settings.gradle
+    - rootProject.name = 'springboot_template' の行の'springboot_template'をアプリ名に変更する．
+    - 小文字アルファベットと_だけから構成されるものにすること（半角スペースや全角文字は不可）
+  - build.gradle
+    - group = 'jp.ac.oit.igakilab' の行の右側を自分たちのグループ名に変更する．
+      - 例：'jp.ac.oit.inudaisuki'
+      - 小文字アルファベットと_だけから構成されるものにすること（半角スペースや全角文字は不可）
+    - src\main\java 以下のフォルダ構成とgroup及びrootProject.nameのアプリ名はおなじになるようにしておくこと．src\test\java も同じ
+    - 同じくクラスファイルのパッケージの修正も必要
+
+### リポジトリの作成とpush
 - git init, git push
 
-## application.properties
-### 組み込みTomcatのログ設定
-- 参考：https://www.baeldung.com/spring-boot-embedded-tomcat-logs
-- `C:\Users\...\oithomes\advanced\springboot_samples\src\main\resources\application.properties` に以下のようなtomcatのログ設定を追記
-  - jettyにするなら修正必要．参考：https://howtodoinjava.com/spring-boot2/logging/embedded-server-logging-config/
+### application.properties
+- `C:\Users\...\oithomes\advanced\springboot_samples\src\main\resources\application.properties` に以下のような設定を追記
+  - 主にjetty周りの設定
+  - 参考 https://howtodoinjava.com/spring-boot2/logging/embedded-server-logging-config/
+  - tomcatの場合はこちらを参考：https://www.baeldung.com/spring-boot-embedded-tomcat-logs
+
 ```java
-server.tomcat.accesslog.enabled=true
-server.tomcat.basedir=build
-server.tomcat.accesslog.directory=logs
+server.jetty.accesslog.filename=jetty-access.log
+server.jetty.accesslog.enabled=true
+server.jetty.accesslog.date-format=yyyy/mm/dd:HH:mm:ss Z
+server.jetty.accesslog.time-zone=JST
+server.jetty.accesslog.log-server=true
+server.port=8000
+spring.datasource.sql-script-encoding=UTF-8
 ```
 - プロジェクトのbuild/logsフォルダにアクセスログが保存されるようになる．LogFormat等は今後要検討
-- ポート番号 `server.port=8000`
+- ポート番号 `server.port=8000` を設定することで， http://localhost:8000/ でSpringBootアプリが動作するようになる
 
-## SpringBootWebアプリの実行方法
-- gradle bootRun を実行するとSpringBootアプリがビルドされ，組み込みTomcatで起動する
-  - build/libs/ 以下に作成されるjarを対象に，java -jar ???.jar でもSpringBootWebアプリケーションを起動できる
-- 今回はjettyに変更したいので，build.gradleのdependenciesとconfigurationsを以下のように修正
-```gradle
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-  implementation 'org.springframework.boot:spring-boot-starter-jetty'
+### SpringBootWebアプリの実行方法
+- vscodeからターミナル->新しいターミナル，を選択し，bashのターミナルをエディタ下部に開く
+- build.gradleファイルがあるのと同じディレクトリにいることを確認後，`gradle bootRun`を実行するとSpringBootアプリがビルドされ，組み込みjettyで起動する
+  - `gradle build`を実行するとbuild/libs/ 以下に作成されるjarを対象に，java -jar ???.jar でもSpringBootWebアプリケーションを起動できる
+- http://localhost:8000/ にアクセスしたときになにかWebページが表示されていればOK．
 
-  implementation 'org.springframework.boot:spring-boot-starter-security'
-  implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
-  implementation 'com.h2database:h2'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-}
-configurations {
-  implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
-}
-```
+# Samples
+## [Sample1]templateを利用したhtmlファイルの表示
+### 参考
+- https://qiita.com/yama9112/items/ff829561238440437b99
+### 関連するファイル
+- Sample1Controller.java
+- sample1.html
 
 # Samples
 ## templateを利用したhtmlファイルの表示
