@@ -28,8 +28,11 @@
     - このとき，すでにあるフォルダを上書き(overwrite)してよいか問い合わせがあるので，OKすること．
   - Successfully Generatedと出ればOK．
 - .gitignore作成
-- build.gradleのdependenciesに↓を追加（tomcatでなくjettyを利用する設定）
-  - `implementation 'org.springframework.boot:spring-boot-starter-jetty'`
+- build.gradleを修正
+  - tomcatでなくjettyを利用する設定と当初はSecurityを使わないのでその設定をコメントアウトする
+    - `implementation 'org.springframework.boot:spring-boot-starter-jetty'`追加
+    - `configurations`追加
+    - securityのimplementation設定をコメントアウト
 
 ### アプリ名等を後で変更したい場合
 - 以下のファイルを修正する
