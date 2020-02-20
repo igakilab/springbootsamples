@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>SpringBootSample1-2</title>
+</head>
+
+<body>
+  <!--actionは2種類の書き方がある．th:action="@{/result}" と書くか，下記のように書くか．"th:"はタイムリーフのパラメータであることを示すため，@{}で対象を囲む必要がある-->
+  <form action="/sample12" method="post">
+    <input type="number" name="id">
+    <button type="submit">送信</button>
+  </form>
+  <!--idの値がある場合（つまり/sample12にPOSTされ，ModelMapにidが格納されたときだけ）にdivの中身を表示する-->
+  <div th:if="${id}">
+    <!-- 値の表示方法にも2種類ある-->
+    <h1>GET [[${id}]]</h1>
+    <h1 th:text="'GET '+ ${id}"></h1>
+  </div>
+</body>
+
+</html>
