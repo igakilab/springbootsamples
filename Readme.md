@@ -78,6 +78,7 @@ spring.datasource.sql-script-encoding=UTF-8
 - http://localhost:8000/ にアクセスしたときになにかWebページが表示されていればOK．
 
 # Samples(シンプルなGET/POST)
+- HTTP/GET,POSTを利用したWebアプリケーションの作成方法
 ## [Sample1-1]templateを利用したhtmlファイルの表示(HTTP/GET)
 - 特定のURLリクエストに対して静的なhtmlを返すアプリケーション
 ### 参考
