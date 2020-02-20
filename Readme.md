@@ -90,9 +90,29 @@ spring.datasource.sql-script-encoding=UTF-8
 - @Controller
 - @RequestMapping
 ### 動作確認
-- http://localhost:8000/sample1 にアクセスする
+- http://localhost:8000/sample1 をブラウザで表示する
 - HelloWorldと書かれたHTMLがブラウザに表示されればOK
 
+## [Sample1-2] java-html間の値の受け渡し(HTTP/POST, タイムリーフ)
+- Webページのフォームで入力した値をjavaにPOSTし，処理した結果をhtmlで受け取って表示する．
+### 参考
+- https://pointsandlines.jp/java/springboot-request-param
+  - Controllerでリクエストパラメーターを受け取る
+- https://qiita.com/NagaokaKenichi/items/c6d1b76090ef5ef39482
+  - タイムリーフのチートシート
+### 関連するファイル
+- 実装：
+- Sample12Controller.java
+- sample12.html
+### 関連する機能
+- @Controller
+- @RequestMapping (クラス)
+- @PostMapping 及び @RequestParam
+- @GetMapping
+- ModelMapを利用したJavaからHTMLへの値渡し
+### 動作確認
+- http://localhost:8000/sample12 をブラウザで表示する
+- フォーム（テキストボックス）と送信ボタンが表示されるので，数字を入力して送信すると，フォームの下に`GET 1111`のように値が2行表示されればOK．
 
 # Samples(RestController)
 
