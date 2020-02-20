@@ -1,4 +1,4 @@
-# Springboot_samples
+# Springbootsamples
 - Springbootを利用したWebアプリケーションの各種サンプル実装を行うサイト．
 - 対象のSpringbootのver.はv2.4.0.RELEASE
 
@@ -33,6 +33,7 @@
   - Successfully Generatedと出ればOK．
 - .gitignore作成
 - build.gradleを修正
+  - https://github.com/igakilab/springbootsamples/blob/v0.0.2/build.gradle
   - tomcatでなくjettyを利用する設定と当初はSecurityを使わないのでその設定をコメントアウトする
     - `implementation 'org.springframework.boot:spring-boot-starter-jetty'`追加
     - `configurations`追加
