@@ -126,7 +126,7 @@ spring.datasource.sql-script-encoding=UTF-8
 - https://qiita.com/sugaryo/items/5695bfcc21365f429767
 
 ### 関連するファイル
-- 実装：
+- 実装：https://github.com/igakilab/springbootsamples/commit/11fd7ab2ff93a7fed61e6a5c77e2a95b0b4c1076
 - Sample21RestController.java
 
 ### 関連する機能
