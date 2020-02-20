@@ -5,6 +5,9 @@
 ## 環境構築
 - 必要な開発環境は下記を参照して構築すること
 - https://github.com/igakilab/byod.zip_isdev
+- 以下のセットアップを適用した状態のリポジトリは以下
+  - https://github.com/igakilab/springbootsamples/tree/v0.0.2
+  - これをclone, checkoutして下記[SpringBootWebアプリの実行方法]を試して正常に動作すればOK
 
 ### Spring Initializrを利用したセットアップ
 - 作成したいアプリの名前でフォルダを作成し，そのフォルダをvscodeで開く
@@ -13,6 +16,7 @@
   - Input Group Id for your project: jp.ac.oit.is.{チーム名をアルファベット小文字で}
     - 例：jp.ac.oit.is.inudaisuki
       - スペースや特殊文字を含めないこと．すべてアルファベット小文字．
+      - 必ずしもjp.ac.oitから始まらなくても良い
   - Input Artifact Id for your project: {アプリ名をアルファベット小文字で}
     - 例：dogland
     - スペースや特殊文字を含めないこと(_は入力できるが，不具合を誘発することがあるので使わないほうが良い)．すべてアルファベット小文字．また，セットアップ時に作成したフォルダ名と同じにしておくこと．
@@ -73,8 +77,8 @@ spring.datasource.sql-script-encoding=UTF-8
   - `gradle build`を実行するとbuild/libs/ 以下に作成されるjarを対象に，java -jar ???.jar でもSpringBootWebアプリケーションを起動できる
 - http://localhost:8000/ にアクセスしたときになにかWebページが表示されていればOK．
 
-# Samples
-## [Sample1]templateを利用したhtmlファイルの表示
+# Samples(シンプルなGET/POST)
+## [Sample1-1]templateを利用したhtmlファイルの表示(HTTP/GET)
 - 特定のURLリクエストに対して静的なhtmlを返すアプリケーション
 ### 参考
 - https://qiita.com/yama9112/items/ff829561238440437b99
@@ -89,11 +93,12 @@ spring.datasource.sql-script-encoding=UTF-8
 - http://localhost:8000/sample1 にアクセスする
 - HelloWorldと書かれたHTMLがブラウザに表示されればOK
 
+
+# Samples(RestController)
+
+## [Sample2-1]
+
 # Samples
-## templateを利用したhtmlファイルの表示
-- 参考：https://qiita.com/yama9112/items/ff829561238440437b99
-  - 実装：https://github.com/igakilab/springboot_samples/tree/9250ee3354163ac534e3d4b62879a72a5cab42e4
-- http://localhost:8000/sample
 
 ## RestControllerを利用したapiの定義と利用(GET)
 - 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
