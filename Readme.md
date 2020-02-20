@@ -116,9 +116,31 @@ spring.datasource.sql-script-encoding=UTF-8
 - http://localhost:8000/sample12 をブラウザで表示する
 - フォーム（テキストボックス）と送信ボタンが表示されるので，数字を入力して送信すると，フォームの下に`GET 1111`のように値が2行表示されればOK．
 
-# Samples(RestController)
-
+# Samples(RestAPIの作成)
+- urlでリクエストをかけると，htmlではなく何らかの値や文字列が返ってくるRestAPIを実装する
 ## [Sample2-1]
+- Classにapiという名前をつけて，メソッドにrest21という名前をつける．
+- /api/rest21 にGETリクエストすると，Javaのrest21メソッドの返り値がかえってくる(HTMLではない)
+
+### 参考
+- https://qiita.com/sugaryo/items/5695bfcc21365f429767
+
+### 関連するファイル
+- 実装：
+- Sample21RestController.java
+
+### 関連する機能
+- @RestController
+- @RequestMapping
+- @GetMapping
+
+### 動作確認
+- http://localhost:8000/api/sample21 をブラウで表示する，あるいはbashターミナルで下記のように実行したときに，`Hello sample21!` と表示されればOK
+```bash
+$ curl -s http://localhost:8000/api/sample21
+Hello sample21!
+```
+- curlの`-s` オプションはプログレス情報を表示しないためのもの
 
 # Samples
 
