@@ -183,11 +183,19 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 ### 関連するファイル
 - 実装：https://github.com/igakilab/springbootsamples/commit/4e8b7604a77894699e56a5aec0674f555513d1e7
 - Sample3BasicAuthConfiguration.java
+  - antMatchers()のところをanyRequest()にするとすべてのリクエストについてベーシック認証がかかる．
+    - 参考：https://github.com/igakilab/springbootsamples/commit/201f416fca7223566158586a98664deffc3fcc33
+  - ユーザアカウントを複数追加したい場合は，and().withUser()...と続けると良い
+    - 参考：https://github.com/igakilab/springbootsamples/commit/0b7b4c6032f6bfd6b0c66ec6c90190af27e560fc
+  - passwordに`{noop}`とつけると平文のパスワードになる．本来はエンコーダーを利用したほうが良い．
+    - 参考：https://qiita.com/delaware/items/f30452007f6c6bd6e09d
 - Sample3Controller.java
 - sample31.html
 
 ### 関連する機能
 - ベーシック認証
+  - アカウントの追加
+  - 指定したURLリクエストを対象とした認証の追加
 - @Configuration
 - @EnableWebSecurity // securityモジュールを利用するためのアノテーション
 
