@@ -127,7 +127,7 @@ spring.datasource.sql-script-encoding=UTF-8
 
 ### 関連するファイル
 - 実装：https://github.com/igakilab/springbootsamples/commit/11fd7ab2ff93a7fed61e6a5c77e2a95b0b4c1076
-- Sample21RestController.java
+- Sample2RestController.java
 
 ### 関連する機能
 - @RestController
@@ -142,12 +142,36 @@ Hello sample21!
 ```
 - curlの`-s` オプションはプログレス情報を表示しないためのもの
 
-## [Sample2-1] パラメータを渡してRestAPIを呼ぶ方法
+## [Sample2-2] パラメータを渡してRestAPIを呼ぶ方法
 - パスパラメータ，クエリパラメータの2種類の方法でRestAPIを呼び，Javaに値を渡す方法
   - RestAPI以外でも使える
 
 ### 参考
 - https://qiita.com/sugaryo/items/5695bfcc21365f429767
+
+### 関連するファイル
+- 実装：
+- Sample2RestController.java
+
+### 関連する機能
+- @RestController
+- @RequestMapping
+- @GetMapping
+- パスパラメータ：@PathVariable
+- クエリパラメータ：@RequestParam
+
+### 動作確認
+- bashターミナルで下記のようになればOK．ブラウザでも確認できる．
+- 上2つがパスパラメータ，3つ目がクエリパラメータ．
+```bash
+$ curl -s http://localhost:8000/api/sample22/hoge
+受け取ったパラメータはhogeです
+$ curl -s http://localhost:8000/api/sample22/hoge/fuga
+受け取ったパラメータはhogeとfugaです
+$ curl -s http://localhost:8000/api/sample22?param=ora
+受け取ったクエリパラメータはoradayo
+```
+- curlの`-s` オプションはプログレス情報を表示しないためのもの
 
 # Samples
 
