@@ -150,7 +150,7 @@ Hello sample21!
 - https://qiita.com/sugaryo/items/5695bfcc21365f429767
 
 ### 関連するファイル
-- 実装：
+- 実装：https://github.com/igakilab/springbootsamples/commit/30f170578d503e81cde655c5c3aedbbfc82c28cc
 - Sample2RestController.java
 
 ### 関連する機能
@@ -173,24 +173,42 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 ```
 - curlの`-s` オプションはプログレス情報を表示しないためのもの
 
+# Samples(ベーシック認証)
+## [Sample3-1]最もシンプルなベーシック認証
+- 特定のURLにアクセスする際にID・パスワードでの認証を行う
+### 参考
+- https://www.memory-lovers.blog/entry/2016/05/15/142600
+- https://codezine.jp/article/detail/11703
+
+### 関連するファイル
+- Sample3BasicAuthConfiguration.java
+- Sample3Controller.java
+- sample31.html
+
+### 関連する機能
+- ベーシック認証
+- @Configuration
+- @EnableWebSecurity // securityモジュールを利用するためのアノテーション
+
+### 動作確認
+- ブラウザで `http://localhost:8000/sample3/sample31` にアクセスする
+- ベーシック認証のダイアログが表示されるので，user/password と入力する．
+- `Authenticated!` と表示されればOK
+
 # Samples
+## [Sample3-2]ベーシック認証時にログインユーザ名を取得する方法
+### 参考
 
-## Restのパスパラメータ
-- 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
-  - 実装：https://github.com/igakilab/springboot_samples/commit/b653a6ffab85606bc1dec3b67ae960a166e5eaf9
-- http://localhost:8000/api/test/hoge/fuga
-  - `@RequestMapping("test/{param1}/{param2}")` とアノテートされたメソッドを呼び出す．メソッドの仮引数にパスパラメータを割り当てられる
+### 関連するファイル
 
-## Restのクエリパラメータ
-- 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
-  - 実装：https://github.com/igakilab/springboot_samples/commit/2cf5f05d2e136a0b7c3be9820164a9c748c1db86
-- http://localhost:8000/api/test?param=hoge
-  - `@RequestMapping("test")`なメソッドを呼び出す．クエリパラメータ名は指定がなければ仮引数の名前と同じ
+### 関連する機能
+
+### 動作確認
+
+
 
 ## 複数ユーザによるベーシック認証とユーザ名表示
 - 参考
-  - https://www.codeflow.site/ja/article/spring-security__get-current-logged-in-username-in-spring-security
-  - https://qiita.com/opengl-8080/items/eb3bf3b5301bae398cc2
   - 実装：https://github.com/igakilab/springboot_samples/commit/0b7b4c6032f6bfd6b0c66ec6c90190af27e560fc
 - http://localhost:8000/hello
   - タイムリーフの使い方，ログインユーザ名の取得方法
