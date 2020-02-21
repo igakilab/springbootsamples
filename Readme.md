@@ -181,6 +181,7 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 - https://codezine.jp/article/detail/11703
 
 ### 関連するファイル
+- 実装：https://github.com/igakilab/springbootsamples/commit/4e8b7604a77894699e56a5aec0674f555513d1e7
 - Sample3BasicAuthConfiguration.java
 - Sample3Controller.java
 - sample31.html
