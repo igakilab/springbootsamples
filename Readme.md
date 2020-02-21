@@ -118,7 +118,7 @@ spring.datasource.sql-script-encoding=UTF-8
 
 # Samples(RestAPIの作成)
 - urlでリクエストをかけると，htmlではなく何らかの値や文字列が返ってくるRestAPIを実装する
-## [Sample2-1]
+## [Sample2-1] RestControllerの基本的な利用方法
 - Classにapiという名前をつけて，メソッドにrest21という名前をつける．
 - /api/rest21 にGETリクエストすると，Javaのrest21メソッドの返り値がかえってくる(HTMLではない)
 
@@ -142,13 +142,14 @@ Hello sample21!
 ```
 - curlの`-s` オプションはプログレス情報を表示しないためのもの
 
-# Samples
+## [Sample2-1] パラメータを渡してRestAPIを呼ぶ方法
+- パスパラメータ，クエリパラメータの2種類の方法でRestAPIを呼び，Javaに値を渡す方法
+  - RestAPI以外でも使える
 
-## RestControllerを利用したapiの定義と利用(GET)
-- 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
-  - 実装：https://github.com/igakilab/springboot_samples/commit/dfb755c75f097ff1ef22293bf97173fc78c53ae3
-- http://localhost:8000/api/hello
-  - Classにapiという名前をつけて，メソッドにhelloという名前をつける．↑のURLを呼び出すとhelloと名前をつけたメソッドの返り値が表示される
+### 参考
+- https://qiita.com/sugaryo/items/5695bfcc21365f429767
+
+# Samples
 
 ## Restのパスパラメータ
 - 参考：https://qiita.com/sugaryo/items/5695bfcc21365f429767
@@ -176,18 +177,6 @@ Hello sample21!
   - 実装：https://github.com/igakilab/springboot_samples/commit/201f416fca7223566158586a98664deffc3fcc33
 - http://localhost:8000/sample
   - ベーシック認証がこのリクエストについてのみかからない．
-
-## フォームを利用してPOSTするサンプル
-- 参考
-  - https://pointsandlines.jp/java/springboot-request-param
-    - html部分のみこのままだとエラー
-  - https://qiita.com/NagaokaKenichi/items/c6d1b76090ef5ef39482
-    - タイムリーフのチートシート
-  - 実装：https://github.com/igakilab/springboot_samples/commit/297f8113ba3d7736a65537bf7b89dff9082ba5c0
-- http://localhost:8000/result
-  - フィールドに数字を入れ，送信ボタンを押すと，フォームの下にGet 5等の数字が表示される．
-  - result.htmlに対するGET/POST両方のコントローラを作成し，処理を実施
-  - タイムリーフを利用し，値があるときとないとで表示を変える条件分岐もサンプル実装してみた
 
 ## DBの初期化及びデータ取得処理
 - 参考
