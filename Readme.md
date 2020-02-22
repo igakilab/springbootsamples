@@ -204,8 +204,26 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 - ベーシック認証のダイアログが表示されるので，user/password と入力する．
 - `Authenticated!` と表示されればOK
 
-# Samples
 ## [Sample3-2]ベーシック認証時にログインユーザ名を取得する方法
+### 参考
+- https://www.codeflow.site/ja/article/spring-security__get-current-logged-in-username-in-spring-security
+
+### 関連するファイル
+- 実装：
+- Sample3Controller.java
+- sample32.html
+
+### 関連する機能
+- Principalを利用したログインユーザ情報の取得
+- タイムリーフを利用したModelMapからの値の取得
+
+### 動作確認
+- http://localhost:8000/sample3/sample32 にブラウザでアクセスする
+- ベーシック認証のダイアログが表示されるので，user/password と入力する
+  - すでにログインしていたらダイアログは表示されない
+- `Hello user`と表示されたらOK（userはログインID）．
+
+# Samples
 ### 参考
 
 ### 関連するファイル
@@ -213,7 +231,6 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 ### 関連する機能
 
 ### 動作確認
-
 
 
 ## 複数ユーザによるベーシック認証とユーザ名表示
