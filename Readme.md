@@ -209,7 +209,7 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 - https://www.codeflow.site/ja/article/spring-security__get-current-logged-in-username-in-spring-security
 
 ### 関連するファイル
-- 実装：
+- 実装：https://github.com/igakilab/springbootsamples/commit/617318246f2bfec5fadf7075d9fa2e35b3793d09
 - Sample3Controller.java
 - sample32.html
 
@@ -223,6 +223,53 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
   - すでにログインしていたらダイアログは表示されない
 - `Hello user`と表示されたらOK（userはログインID）．
 
+# Samples(データベースとの連携)
+## [Sample4-1]DBのテーブル設定，値登録とselectによる取得
+- schema.sqlの内容でテーブルを構築し，data.sqlの内容で初期データを登録する．
+- build.gradleに`runtimeOnly 'com.h2database:h2'`と書いてあれば
+### 参考
+- https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478
+- https://teratail.com/questions/99983
+  - 日本語の取り扱いについて
+- https://mybatis.org/spring/ja/mappers.html
+  - MapperクラスのオブジェクトはSpringBootが自動的に作成してくれるので，必要なときにMapperクラスのオブジェクトを引数に持つコンストラクタを定義すれば良い
+
+### 関連するファイル
+- 実装：https://github.com/igakilab/springbootsamples/commit/166a382f8fd14b14286ef216c65c92654847fb4b
+- Fruits.java
+- FruitsMapper.java
+  - Fruitsオブジェクトの内容とDBの内容をFruitsMapperインタフェースを利用して関連付ける
+- schema.sql
+  - DBの初期構造（要はCreate Table)
+- data.sql
+  - DBの初期データ（Insert）
+- DemoApplication.java
+- この例ではすでに実装されているが，application.propertiesで文字コード(utf8)の設定(`spring.datasource.sql-script-encoding=UTF-8`)とbuild.gradleのdependenciesに下記の追記が必要
+```gradle
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
+	runtimeOnly 'com.h2database:h2'
+```
+  - これが記述されているとH2DBの場合はあらゆるDB接続関連の設定をSpringBootが自動でやってくれるようになる．
+
+### 関連する機能
+- CommandLineRunner
+  - アプリケーション起動時にやらせたい処理を実装できるようになる．
+- Mybatisのmapper
+- @Transactional
+- @Mapper
+- @Select
+
+### 動作確認
+- `gradle bootRun` を実行するとコンソールに下記が表示されればOK
+```bash
+さがほのか
+10
+5.8
+いちご
+false
+```
+- DemoApplicationクラスのrunメソッド内でDBから値を取得してFruitsオブジェクトに格納し，表示する処理をCommandLineRunnerのrunメソッドをオーバライドして実装している．
+
 # Samples
 ### 参考
 
@@ -233,18 +280,6 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 ### 動作確認
 
 
-## 複数ユーザによるベーシック認証とユーザ名表示
-- 参考
-  - 実装：https://github.com/igakilab/springboot_samples/commit/0b7b4c6032f6bfd6b0c66ec6c90190af27e560fc
-- http://localhost:8000/hello
-  - タイムリーフの使い方，ログインユーザ名の取得方法
-
-## 特定ページへのベーシック認証をかけない設定
-- 参考
-  - https://intellectual-curiosity.tokyo/2019/04/14/spring-boot-2-x-%E3%81%A7basic%E8%AA%8D%E8%A8%BC%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/
-  - 実装：https://github.com/igakilab/springboot_samples/commit/201f416fca7223566158586a98664deffc3fcc33
-- http://localhost:8000/sample
-  - ベーシック認証がこのリクエストについてのみかからない．
 
 ## DBの初期化及びデータ取得処理
 - 参考
