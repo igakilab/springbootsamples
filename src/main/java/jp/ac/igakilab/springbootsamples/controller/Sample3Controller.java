@@ -1,6 +1,9 @@
 package jp.ac.igakilab.springbootsamples.controller;
 
+import java.security.Principal;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,5 +23,12 @@ public class Sample3Controller {
   @GetMapping("sample31")
   public String sample31() {
     return "sample31";
+  }
+
+  @GetMapping("sample32")
+  public String sample32(ModelMap model, Principal principal) {
+    String name = principal.getName(); // ログインユーザ名をprincipalから取得する
+    model.addAttribute("username", name); // usernameというキーにnameの値を格納すると，sample32.htmlで参照できるようになる．
+    return "sample32";
   }
 }
