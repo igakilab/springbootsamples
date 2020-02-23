@@ -2,6 +2,7 @@ package jp.ac.igakilab.springbootsamples.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import jp.ac.igakilab.springbootsamples.model.Fruits;
@@ -30,6 +31,14 @@ public class Sample4Controller {
     System.out.println(fruit.getWeight());
     System.out.println(fruit.getDetails());
     System.out.println(fruit.isSent());
+    return "sample4.html";
+  }
+
+  @Transactional // DBのトランザクション処理を利用したい場合につける
+  @GetMapping("sample42")
+  public String sample42GetFruits(ModelMap model) {
+    Fruits fruit = fruitsMapper.select(1);// IDが1のフルーツの情報をDBから取得する
+    model.addAttribute("fruit", fruit);// htmlから見えるようになる．
     return "sample4.html";
   }
 }
