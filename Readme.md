@@ -226,7 +226,7 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 # Samples(データベースとの連携)
 ## [Sample4-1]DBのテーブル設定，値登録とselectによる取得
 - schema.sqlの内容でテーブルを構築し，data.sqlの内容で初期データを登録する．
-- build.gradleに`runtimeOnly 'com.h2database:h2'`と書いてあれば
+- DBからSELECT文で値を取得し，Fruitsオブジェクトに格納する処理をMybatisのマッパー機能を利用して実装する．
 ### 参考
 - https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478
 - https://teratail.com/questions/99983
@@ -235,7 +235,7 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
   - MapperクラスのオブジェクトはSpringBootが自動的に作成してくれるので，必要なときにMapperクラスのオブジェクトを引数に持つコンストラクタを定義すれば良い
 
 ### 関連するファイル
-- 実装：https://github.com/igakilab/springbootsamples/commit/166a382f8fd14b14286ef216c65c92654847fb4b
+- 実装：
 - Fruits.java
 - FruitsMapper.java
   - Fruitsオブジェクトの内容とDBの内容をFruitsMapperインタフェースを利用して関連付ける
@@ -243,7 +243,7 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
   - DBの初期構造（要はCreate Table)
 - data.sql
   - DBの初期データ（Insert）
-- DemoApplication.java
+- Sample4Controller.java
 - この例ではすでに実装されているが，application.propertiesで文字コード(utf8)の設定(`spring.datasource.sql-script-encoding=UTF-8`)とbuild.gradleのdependenciesに下記の追記が必要
 ```gradle
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
@@ -252,15 +252,15 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
   - これが記述されているとH2DBの場合はあらゆるDB接続関連の設定をSpringBootが自動でやってくれるようになる．
 
 ### 関連する機能
-- CommandLineRunner
-  - アプリケーション起動時にやらせたい処理を実装できるようになる．
-- Mybatisのmapper
+- @Controller
+- @GetMapping
+- Mybatisのmapper interface
 - @Transactional
 - @Mapper
 - @Select
 
 ### 動作確認
-- `gradle bootRun` を実行するとコンソールに下記が表示されればOK
+- http://localhost:8000/sample41 にアクセスすると，ターミナルに下記が表示されればOK．ブラウザにはFruits Listとだけ表示される．
 ```bash
 さがほのか
 10
@@ -268,7 +268,7 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 いちご
 false
 ```
-- DemoApplicationクラスのrunメソッド内でDBから値を取得してFruitsオブジェクトに格納し，表示する処理をCommandLineRunnerのrunメソッドをオーバライドして実装している．
+- Sample4Controllerクラスのsample41GetFruitsメソッド内でDBから値を取得してFruitsオブジェクトに格納し，表示している．
 
 # Samples
 ### 参考
