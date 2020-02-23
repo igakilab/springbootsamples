@@ -235,7 +235,7 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
   - MapperクラスのオブジェクトはSpringBootが自動的に作成してくれるので，必要なときにMapperクラスのオブジェクトを引数に持つコンストラクタを定義すれば良い
 
 ### 関連するファイル
-- 実装：
+- 実装：https://github.com/igakilab/springbootsamples/commit/c13b2a1fd5170dcb24214abe4fb3a2cc5ecb85df
 - Fruits.java
 - FruitsMapper.java
   - Fruitsオブジェクトの内容とDBの内容をFruitsMapperインタフェースを利用して関連付ける
@@ -269,6 +269,34 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 false
 ```
 - Sample4Controllerクラスのsample41GetFruitsメソッド内でDBから値を取得してFruitsオブジェクトに格納し，表示している．
+
+## [Sample4-2]DBの値を取得し，GETでHTMLに渡して表示する方法
+
+### 参考
+- https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478
+- https://www.shookuro.com/entry/2017/05/02/120110
+  - ModelMapへの独自クラスのオブジェクトを追加する方法
+
+### 関連するファイル
+- Sample4Controller.java
+- sample4.html
+
+### 関連する機能
+- @Controller
+- @Transactional
+- @GetMapping
+- タイムリーフを利用した値の表示
+
+### 動作確認
+- ブラウザで http://localhost:8000/sample42 にアクセスすると，ブラウザにFruits Listの下に下記が2回繰り返して表示されればOK．
+```bash
+さがほのか
+10
+5.8
+いちご
+false
+```
+- Sample4Controllerクラスのsample42GetFruitsメソッド内でDBから値を取得してFruitsオブジェクトに格納し，ModelMapオブジェクトに渡してhtmlから参照している．
 
 # Samples
 ### 参考
