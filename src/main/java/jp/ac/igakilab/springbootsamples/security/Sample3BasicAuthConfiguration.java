@@ -24,5 +24,9 @@ public class Sample3BasicAuthConfiguration extends WebSecurityConfigurerAdapter 
     // "/sample3"で始まるURLはログインしていなければ表示されない
     // ".and().httpBasic()" がない場合はログインフォームを別途指定する必要がある
     http.authorizeRequests().antMatchers("/sample3/**").authenticated().and().httpBasic();
+    // 以下2行がないと，H2DBにWebクライアントからアクセスできない
+    // 開発が終了したらSecurity的には以下2行は消したほうが良い
+    http.csrf().disable();
+    http.headers().frameOptions().disable(); // HTTPヘッダのX-Frame-OptionsがDENYになるとiframeでlocalhostでのアプリが使えなくなるので，H2DBのWebクライアントのためだけにdisableにする必要がある
   }
 }

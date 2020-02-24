@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>SpringBoot Sample4-3</title>
+</head>
+
+<body>
+  <form action="/sample43" th:object="${fruit}" method="POST">
+    名前：<input type="text" th:field="*{name}">
+    数：<input type="number" th:field="*{num}">
+    <input type="submit" value="送信">
+  </form>
+</body>
+
+</html>

@@ -278,6 +278,7 @@ false
   - ModelMapへの独自クラスのオブジェクトを追加する方法
 
 ### 関連するファイル
+- 実装：https://github.com/igakilab/springbootsamples/commit/66b5d20a52480d187bcb8b31312f4ab743454461
 - Sample4Controller.java
 - sample4.html
 
@@ -298,6 +299,58 @@ false
 ```
 - Sample4Controllerクラスのsample42GetFruitsメソッド内でDBから値を取得してFruitsオブジェクトに格納し，ModelMapオブジェクトに渡してhtmlから参照している．
 
+## [Sample4-3] フォームでPOSTしたデータをDBに登録する
+- オブジェクトごとPOSTでデータをHTMLからJavaに渡し，insert文をmapperインタフェースを利用して実行する
+### 参考
+- https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478#mybatisdemoapplication%E3%81%AE%E4%BF%AE%E6%AD%A3%E3%81%A8spring-boot%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E8%B5%B7%E5%8B%95
+  - insert及びinsert時のkeyのauto incrementに関するサンプル
+- https://qiita.com/yukihane/items/3effe753ce01a2cadd84
+  - H2DBのWebコンソール利用のための設定について
+
+### 関連するファイル
+- 実装：
+- application.properties
+  - DB関連の設定
+- Sample3BasicAuthConfiguration.java
+  - csrfやX-Frame-Optionsの設定
+- FruitsMapper.java
+  - INSERT文
+- Sample4Controller.java
+
+### 関連する機能
+- @GetMapping
+- @PostMapping
+- @ModelAttribute
+- @Insert
+- @Options
+
+### 動作確認
+- http://localhost:8000/sample43 にブラウザでアクセスし，名前に果物の名前を数に数値を入れて「送信」ボタンをクリックするとターミナルに以下のように入力した果物名や数値が表示されればOK
+```sh
+ぶどう
+100
+0.0
+null
+false
+```
+
+### 動作確認（H2DBコンソール）
+- http://localhost:8000/h2-console にアクセスし，application.propertiesの以下の項目に従って入力する
+  - [Saved Settings] Generic H2(Embedded)
+  - [Driver Class] org.h2.Driver
+  - [JDBR URL] jdbc:h2:mem:testdb
+  - [User Name] sa
+- Connectをクリックするとjdbc:h2:mem:testdbに接続される．
+- FRUITSというテーブルが作成されているので選択し，SELECT文などをRunさせると，テーブルにデータがINSERTされていることが確認できる．
+- Sample3BasicAuthConfiguration.javaに設定したようにCSRFとX-Frameの設定を解除しないとh2-consoleは正しくConnectできない．
+```java
+spring.datasource.url=jdbc:h2:mem:testdb
+# H2DBを利用する場合のドライバ名，ユーザ名，パスワード（なし）
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+```
+
 # Samples
 ### 参考
 
@@ -308,30 +361,6 @@ false
 ### 動作確認
 
 
-
-## DBの初期化及びデータ取得処理
-- 参考
-  - https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478
-  - https://teratail.com/questions/99983
-    - 日本語の取り扱いについて
-  - https://mybatis.org/spring/ja/mappers.html
-    - MapperクラスのオブジェクトはSpringBootが自動的に作成してくれるので，必要なときにMapperクラスのオブジェクトを引数に持つコンストラクタを定義すれば良い
-  - 実装：https://github.com/igakilab/springboot_samples/commit/e27de415578525a00f538f80b3a4f0478ac149ce
-- 実行するとgradle bootRunを実行したターミナルに，schema.sqlを通じてcreateされたテーブルにdata.sqlから登録されたデータが表示される．
-- Fruits.javaのinterfaceを利用してFruitsMapper.javaでDBから取得するselect文を書いている
-- apprication.propertiesでは，data.sqlがUTF-8なので，同じくUTF-8の利用を指定している（これがないともじバケる）
-- H2DBを利用しており，データソースの設定はすべてspringbootが自動的にやってくれている
-- CommandLineRunnerを利用してみた．SpringBoot起動時に呼び出してくれるらしい．DB等の初期化処理などに使えるっぽい．
-
-## DBの値を取得し，GETでHTMLに渡して表示する方法
-- 参考：
-  - https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478
-  - https://www.shookuro.com/entry/2017/05/02/120110
-  - ModelMapへの独自クラスのオブジェクトを追加する方法
-  - 実装：https://github.com/igakilab/springboot_samples/commit/583faf57e3791cdbe22324d3070589ff71da4fac
-- http://localhost:8000/addFruits
-  - DBに登録されたフルーツのデータをGET Requestに応じてタイムリーフを利用して表示する
-  - 2種類の方法でHTMLにDBに登録されたフルーツの情報が表示される．
 
 ## フォームでPOSTしたデータをDBに登録し，同じページに登録した内容を表示する方法
 - 参考：
