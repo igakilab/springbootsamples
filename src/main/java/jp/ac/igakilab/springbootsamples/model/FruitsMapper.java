@@ -1,6 +1,8 @@
 package jp.ac.igakilab.springbootsamples.model;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 /**
@@ -19,4 +21,13 @@ public interface FruitsMapper {
    */
   @Select("SELECT id, name,num,weight,details,sent FROM fruits WHERE id = #{id}")
   Fruits select(int id);
+
+  /**
+   * @InsertがInsert文であることを示す．
+   * #{name}などは，下のinsert文の引数で与えられているFruitsクラスのオブジェクトfruitに含まれるnameフィールドなどの値を示している
+   * ここで@Optionsはidフィールドをkeyとして，数値を自動インクリメントして自動生成するように設定している
+   */
+  @Insert("INSERT INTO fruits (name,num,weight,details,sent) VALUES (#{name}, #{num}, #{weight}, #{details}, #{sent})")
+  @Options(useGeneratedKeys = true, keyProperty = "id")
+  void insert(Fruits fruit);
 }
