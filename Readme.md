@@ -308,7 +308,7 @@ false
   - H2DBのWebコンソール利用のための設定について
 
 ### 関連するファイル
-- 実装：
+- 実装：https://github.com/igakilab/springbootsamples/commit/fc4c286802a72ee6eed5db69169348e80d51d85d
 - application.properties
   - DB関連の設定
 - Sample3BasicAuthConfiguration.java
@@ -323,9 +323,12 @@ false
 - @ModelAttribute
 - @Insert
 - @Options
+- @Transactional
+  - @TransactionalをDBに書き込みを行う場合はつけておくと良いらしい（失敗した際に自動でロールバックしてくれる）
 
 ### 動作確認
 - http://localhost:8000/sample43 にブラウザでアクセスし，名前に果物の名前を数に数値を入れて「送信」ボタンをクリックするとターミナルに以下のように入力した果物名や数値が表示されればOK
+- フォームに入力して「送信」すると，id2として（auto increment）送信した内容がDBに登録され，それがそのままフルーツ2としてターミナルに表示される
 ```sh
 ぶどう
 100
@@ -360,18 +363,6 @@ spring.datasource.password=
 
 ### 動作確認
 
-
-
-## フォームでPOSTしたデータをDBに登録し，同じページに登録した内容を表示する方法
-- 参考：
-  - https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478#mybatisdemoapplication%E3%81%AE%E4%BF%AE%E6%AD%A3%E3%81%A8spring-boot%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E8%B5%B7%E5%8B%95
-    - insert及びinsert時のkeyのauto incrementに関するサンプル
-  - 実装：https://github.com/igakilab/springboot_samples/commit/86e82e938c8d242192f656ea73f04a32f94a35e6
-    - ↑実装時は漏れていたが，↓のように@TransactionalをDBに書き込みを行う場合はつけておくと良いらしい（失敗した際に自動でロールバックしてくれる）
-    - https://github.com/igakilab/springboot_samples/commit/28b49a47e0a87387a19b8a9dc63c05b8fa852af7
-- http://localhost:8000/addFruits
-  - 表示するとid1に登録されているフルーツが表示される
-  - フォームに入力して「送信」すると，id2として（auto increment）送信した内容がDBに登録され，それがそのままフルーツ2としてhtmlにフルーツ1の代わりに表示される
 
 ## DBから複数の値をArrayListで取得し，htmlで表示するサンプル
 - 参考：
