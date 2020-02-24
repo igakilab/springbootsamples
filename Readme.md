@@ -353,6 +353,7 @@ spring.datasource.driverClassName=org.h2.Driver
 spring.datasource.username=sa
 spring.datasource.password=
 ```
+## [Sample4-4] DBから複数の値をArrayListで取得し，htmlで表示するサンプル
 
 # Samples
 ### 参考
