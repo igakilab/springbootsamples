@@ -385,6 +385,7 @@ index:1 id:2 レモン 100 0.0 false
   - @Asyncの使い方
 - https://qiita.com/kazuki43zoo/items/53b79fe91c41cc5c2e59
 ### 関連するファイル
+- 実装：https://github.com/igakilab/springbootsamples/commit/91f99fd6dd87d46154f69d2363c06865d0d6a16b
 - DemoApplication.java
 - Sample5RestSseController.java
   - この時点ではまだSse使わず
