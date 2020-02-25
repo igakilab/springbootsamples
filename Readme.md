@@ -359,7 +359,7 @@ spring.datasource.password=
 - https://qiita.com/NagaokaKenichi/items/c6d1b76090ef5ef39482#%E7%B9%B0%E3%82%8A%E8%BF%94%E3%81%97%E3%83%AB%E3%83%BC%E3%83%97
   - タイムリーフにおける繰り返し処理やステータス変数(stat)について
 ### 関連するファイル
-- 実装：
+- 実装：https://github.com/igakilab/springbootsamples/commit/c9914b2fc6e25a3a0e338ce3b26714e55e7f8658
 - Sample4Controller.java
 - FruitsMapper.java
 - sample44.html
