@@ -316,7 +316,7 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 - https://www.memory-lovers.blog/entry/2016/05/15/142600
 
 ### 関連するファイル
-- 実装：
+- 実装：https://github.com/igakilab/springbootsamples/commit/a281ff07b4e64791f5bdbba99b032e756538ff0a
 - Sample3BasicAuthConfiguration.java
 
 ### 関連する機能
