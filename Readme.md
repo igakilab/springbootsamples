@@ -377,6 +377,36 @@ index:1 id:2 レモン 100 0.0 false
 ```
 - 最初のindexはステータス変数(stat.index)の値．他のステータス変数については参考資料参照．
 
+# Samples(非同期呼び出し)
+## [Sample5-1] @Asyncを利用した非同期処理
+- URLにアクセスすると一瞬でレスポンスがあるが，実際の処理はそのあと行われる
+### 参考
+- https://qiita.com/aono-masashi/items/0ef2a0ddc8d901ff27dd
+  - @Asyncの使い方
+- https://qiita.com/kazuki43zoo/items/53b79fe91c41cc5c2e59
+### 関連するファイル
+- DemoApplication.java
+- Sample5RestSseController.java
+  - この時点ではまだSse使わず
+- AsyncService.java
+  - 非同期処理が行われるメソッドの実装
+### 関連する機能
+- @EnableAsync // 非同期処理のためのアノテーション
+- @RestController
+- @RequestMapping("sample5")
+- @GetMapping
+- @Autowired
+- @Service
+- @Async
+
+### 動作確認
+- `curl -i -s -N http://localhost:8000/sample5/sample51` と実行すると，すぐに結果(`Tue Feb 25 12:05:50 JST 2020
+`などの現在時刻)が返ってきて，内部の処理自体は5秒後に完了していればOK．async startからasync endまでgradleを実行したターミナルに表示されている．
+  - -i:Respnse Header, Body 両方を出力
+  - -s:silent mode
+  - -N: No buffer
+- 同じURLにブラウザでアクセスしてもOK
+
 # Samples
 ### 参考
 - https://qiita.com/NagaokaKenichi/items/c6d1b76090ef5ef39482#%E7%B9%B0%E3%82%8A%E8%BF%94%E3%81%97%E3%83%AB%E3%83%BC%E3%83%97
@@ -388,17 +418,6 @@ index:1 id:2 レモン 100 0.0 false
 ### 動作確認
 
 
-## DBから複数の値をArrayListで取得し，htmlで表示するサンプル
-- 参考：
-  - https://qiita.com/NagaokaKenichi/items/c6d1b76090ef5ef39482#%E7%B9%B0%E3%82%8A%E8%BF%94%E3%81%97%E3%83%AB%E3%83%BC%E3%83%97
-    - タイムリーフを利用した繰り返し処理及びステータス変数について参考にした
-    - 繰り返しの単位がtdになっていたので，行単位で繰り返しを行うように実装では修正した．
-  - 実装：https://github.com/igakilab/springboot_samples/commit/480b15ac815e816086aec744c1cb9ce64df160b1
-- http://localhost:8000/addFruits
-  - まずはこれを開いて，何でも良いので新しいフルーツの名前と数をDBに追加する
-- http://localhost:8000/showFruitsList
-  - 複数のフルーツがDBに登録された状態でこれを開くと，フルーツの情報が一行ずつ表示される
-  - タイムリーフを利用したfor-each文とステータス変数を使った情報の表示を行っている
 
 ## SseEmitterとEventSourceを利用して非同期呼び出しを行うサンプル
 - 参考：
