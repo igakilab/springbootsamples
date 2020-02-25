@@ -23,7 +23,8 @@ public class Sample3BasicAuthConfiguration extends WebSecurityConfigurerAdapter 
   protected void configure(HttpSecurity http) throws Exception {
     // "/sample3"で始まるURLはログインしていなければ表示されない
     // ".and().httpBasic()" がない場合はログインフォームを別途指定する必要がある
-    http.authorizeRequests().antMatchers("/sample3/**").authenticated().and().httpBasic();
+    // http.authorizeRequests().antMatchers("/sample3/**").authenticated().and().httpBasic();
+    http.authorizeRequests().antMatchers("/sample3/**").authenticated().and().formLogin().and().logout();
     // 以下2行がないと，H2DBにWebクライアントからアクセスできない
     // 開発が終了したらSecurity的には以下2行は消したほうが良い
     http.csrf().disable();
