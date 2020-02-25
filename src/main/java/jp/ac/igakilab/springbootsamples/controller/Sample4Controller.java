@@ -1,5 +1,7 @@
 package jp.ac.igakilab.springbootsamples.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -76,5 +78,19 @@ public class Sample4Controller {
     System.out.println(fruit2.isSent());
 
     return "sample43.html";
+  }
+
+  /**
+   *
+   * @param model htmlで表示したい果物のリストを格納するmapオブジェクト
+   * @return HTMLのviewを返す
+   */
+  @GetMapping("sample44")
+  public String sample44GetFruitsList(ModelMap model) {
+    // すべての果物のArrayListを取得し，modelに格納する
+    ArrayList<Fruits> fruitsList = this.fruitsMapper.selectAllFruits();
+    model.addAttribute("fruits", fruitsList);
+    return "sample44.html";
+
   }
 }

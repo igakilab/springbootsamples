@@ -316,6 +316,7 @@ false
 - FruitsMapper.java
   - INSERT文
 - Sample4Controller.java
+- sample43.html
 
 ### 関連する機能
 - @GetMapping
@@ -354,10 +355,32 @@ spring.datasource.username=sa
 spring.datasource.password=
 ```
 ## [Sample4-4] DBから複数の値をArrayListで取得し，htmlで表示するサンプル
+### 参考
+- https://qiita.com/NagaokaKenichi/items/c6d1b76090ef5ef39482#%E7%B9%B0%E3%82%8A%E8%BF%94%E3%81%97%E3%83%AB%E3%83%BC%E3%83%97
+  - タイムリーフにおける繰り返し処理やステータス変数(stat)について
+### 関連するファイル
+- 実装：
+- Sample4Controller.java
+- FruitsMapper.java
+- sample44.html
+### 関連する機能
+- @Select
+- @GetMapping
+- Mapperを利用したFruitsオブジェクトのArrayList取得
+
+### 動作確認
+- http://localhost:8000/sample43 にアクセスし，果物を追加で登録する
+- http://localhost:8000/sample44 にアクセスし，下記のようにブラウザにFruitsのリストが表示されればOK
+```
+index:0 id:1 さがほのか 10 5.8 いちご false
+index:1 id:2 レモン 100 0.0 false
+```
+- 最初のindexはステータス変数(stat.index)の値．他のステータス変数については参考資料参照．
 
 # Samples
 ### 参考
-
+- https://qiita.com/NagaokaKenichi/items/c6d1b76090ef5ef39482#%E7%B9%B0%E3%82%8A%E8%BF%94%E3%81%97%E3%83%AB%E3%83%BC%E3%83%97
+  - タイムリーフにおける繰り返し処理やステータス変数(stat)について
 ### 関連するファイル
 
 ### 関連する機能

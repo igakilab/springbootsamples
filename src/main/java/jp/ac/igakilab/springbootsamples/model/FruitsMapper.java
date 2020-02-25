@@ -1,5 +1,7 @@
 package jp.ac.igakilab.springbootsamples.model;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -30,4 +32,12 @@ public interface FruitsMapper {
   @Insert("INSERT INTO fruits (name,num,weight,details,sent) VALUES (#{name}, #{num}, #{weight}, #{details}, #{sent})")
   @Options(useGeneratedKeys = true, keyProperty = "id")
   void insert(Fruits fruit);
+
+  /**
+   * fruitsテーブルにある全ての果物のリストを返す．テーブルのフィールドとFruitsクラスのフィールドが同一であれば，個別にフィールド名を指定しなくとも自動的に変換してくれる
+   *
+   * @return 複数のFruitsオブジェクトが格納されたArrayList
+   */
+  @Select("SELECT * FROM fruits")
+  ArrayList<Fruits> selectAllFruits();
 }
