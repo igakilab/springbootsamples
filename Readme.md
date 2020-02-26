@@ -77,15 +77,11 @@
     - [関連するファイル](#関連するファイル-11)
     - [関連する機能](#関連する機能-11)
     - [動作確認](#動作確認-11)
-- [Samples](#samples)
+  - [[Sample5-2] Push型の非同期処理](#sample5-2-push型の非同期処理)
     - [参考](#参考-12)
     - [関連するファイル](#関連するファイル-12)
     - [関連する機能](#関連する機能-12)
     - [動作確認](#動作確認-12)
-  - [SseEmitterとEventSourceを利用して非同期呼び出しを行うサンプル](#sseemitterとeventsourceを利用して非同期呼び出しを行うサンプル)
-    - [ポイント(StreamingController)](#ポイントstreamingcontroller)
-    - [ポイント(AsyncHelper)](#ポイントasynchelper)
-    - [ポイント(ajaxFruits2.html)](#ポイントajaxfruits2html)
 
 <!-- /TOC -->
 
@@ -488,7 +484,6 @@ index:1 id:2 レモン 100 0.0 false
 ### 参考
 - https://qiita.com/aono-masashi/items/0ef2a0ddc8d901ff27dd
   - @Asyncの使い方
-- https://qiita.com/kazuki43zoo/items/53b79fe91c41cc5c2e59
 ### 関連するファイル
 - 実装：https://github.com/igakilab/springbootsamples/commit/91f99fd6dd87d46154f69d2363c06865d0d6a16b
 - DemoApplication.java
@@ -513,67 +508,50 @@ index:1 id:2 レモン 100 0.0 false
   - -N: No buffer
 - 同じURLにブラウザでアクセスしてもOK
 
-# Samples
+## [Sample5-2] Push型の非同期処理
+- ブラウザから対象のAPIを呼び出すと，開いている間Push形式でJava側の処理が終わるたびにデータをブラウザで受け取って表示することができる．
+- サーバ->クライアントへの通信のみ対応．
+- IEとEdgeでは対応してないっぽい．
 ### 参考
-- https://qiita.com/NagaokaKenichi/items/c6d1b76090ef5ef39482#%E7%B9%B0%E3%82%8A%E8%BF%94%E3%81%97%E3%83%AB%E3%83%BC%E3%83%97
-  - タイムリーフにおける繰り返し処理やステータス変数(stat)について
+- Java側
+  - https://qiita.com/kazuki43zoo/items/53b79fe91c41cc5c2e59
+  - https://www.codeflow.site/ja/article/spring-mvc-sse-streams
+  - https://developer.mozilla.org/ja/docs/Web/API/Server-sent_events/Using_server-sent_events
+- JS側
+  - https://uhyohyo.net/javascript/13_2.html
+  - https://developer.mozilla.org/ja/docs/Web/API/EventSource
+    - EventSourceについて
+- その他サンプル実装：https://github.com/igakilab/springboot_samples/commit/8149268a777e03bce7dfda0c6bba3ef28df52ffe
+  - 確認1: `curl -i -s -N http://localhost:8000/api/streaming?eventNumber=5\&intervalSec=1`
+  - 確認2: `curl -i -s -N http://localhost:8000/api/sse`
+    - SseController内の一部の処理が非同期に呼び出される(L28-L43)．ただ，一部を非同期にするためにConcurrentパッケージのExecutorServiceが必要なのでおすすめしない
+
 ### 関連するファイル
+- 実装：
+- Sample5RestSseController.java
+- AsyncService.java
+- sample52-1.html
+  - 同期呼び出し（一般的なAjax呼び出し）．PUSHではない．
+- sample52-2.html
+  - EventSourceを利用した非同期呼び出し（PUSH）
+  - サーバからメッセージが送られるたびに受け付ける
 
 ### 関連する機能
-
-### 動作確認
-
-
-
-## SseEmitterとEventSourceを利用して非同期呼び出しを行うサンプル
-- 参考：
-  - https://qiita.com/kazuki43zoo/items/53b79fe91c41cc5c2e59
-  - 実装：https://github.com/igakilab/springboot_samples/commit/8149268a777e03bce7dfda0c6bba3ef28df52ffe
-- 確認1: `curl -i -s -N http://localhost:8000/api/streaming?eventNumber=5\&intervalSec=1`
-  - `-i`はHTTPヘッダを表示するオプション， `-s`はダウンロード関連の表示を省略するオプション`-N`はバッファを利用しないオプション（このオプションがないとレスポンスが非同期じゃなくまとめて最後に来るようになる）
-  - StreamingControllerからAsyncHelperのstreamingメソッドが非同期に呼び出されて，レスポンスが非同期に返ってくる
-- 確認2: `curl -i -s -N http://localhost:8000/api/sse`
-  - SseController内の一部の処理が非同期に呼び出される(L28-L43)．ただ，一部を非同期にするためにConcurrentパッケージのExecutorServiceが必要なのでおすすめしない
-- 確認3: http://localhost:8000/ajaxFruits.html
-  - 普通のAjax呼び出しだが，非同期にはならず，すべての処理が終了してから画面が更新される．非推奨だが，一般的な書き方ということで（同期呼び出しならこれでいい）．
-- 確認4: http://localhost:8000/ajaxFruits2.html
-  - EventSourceを利用．非同期に呼び出しが行われ，画面も非同期に更新される．
-  - 一度ページを表示すると，StreamingControllerの該当するstreamingメソッドが何度も呼び出されるっぽい．接続が切れると自動的に再接続してるのかも．
-### ポイント(StreamingController)
-- SseEmitterのところはResponseBodyEmitterでもいける．curlでの実行結果は同様だが，JSで呼び出す際に，↓のようなエラーがJS側で発生してしまう
-  - `EventSource's response has a MIME type ("text/plain") that is not "text/event-stream". Aborting the connection.`
-  - これはResponseBodyEmitterだとtext/plainでメッセージが返るため．SseEmitterだとtext/event-streamで返るのでこちらを使うと良い
-- @RestController
-  - 参考：https://qiita.com/TEBASAKI/items/267c261db17f178e33eb#controller-%E3%82%AF%E3%83%A9%E3%82%B9
-  - 戻り値をそのままJS側で受け取る場合は@RestControllerで良い．今回の場合はemitter.send()の引数がそのままJSに渡される
-- @Autowired
-  - 対象クラスのオブジェクトをnewして割り当ててくれる．
-  - ただし，対象クラスに@Component とアノテーションがついていないと駄目．
-  - この例の場合，AsyncHelperクラスに@Componentがついているので，@Autowiredで割当が行われる．
-  - なお，対象クラスを非同期に呼び出したい場合は@Autowiredが必須っぽい．
-- L35で呼び出しているasyncHelper.streaming()は非同期に呼び出される．すなわち，L35の処理が終了する前にL37が呼び出される．
-  - gradle bootRunを実行したターミナルを確認すると分かる
-  - 非同期に呼び出したい別クラスのメソッドには，引数に必ずSseEmitterクラスのオブジェクトを渡す必要がある．また，呼び出し元メソッド(この例の場合はStreamingController.streaming())の返り値をSseEmitterクラスのオブジェクトにする必要がある．
-### ポイント(AsyncHelper)
-- @Component
-  - このオブジェクトを利用するStreamingControllerで@Autowiredするために必要な設定．要はnewをSpringbootにやってもらうため．
-- @Async
-  - 非同期呼び出しをしたいメソッド（要するに指定したメソッドが終了するのを呼び出し元で待たなくて良い）にアノテーションとして付与する
-- emitter.send()
-  - 対象メソッドの引数に与えられたSseEmitterにsend()で引数として他クラスのオブジェクトや文字列を与えることで，javascript側でオブジェクトの場合はjsonオブジェクトとして，文字列の場合は文字列として受け取ることができる．
-- emitter.complete()
-  - これを呼び出すことで，emitterを利用して呼び出し処理が明示的に終了される．多分呼び出さないとemitterが終了されないままで，再利用できなくなる気がする．
-  - また，これが呼び出されていると，JS側でEventSourceに指定されたapiが何度も呼び出されて，streamingメソッドも何度も呼び出されるが，complete()していないと，streamingメソッドは再度呼び出されることはなくなる（正確には呼ばれていてもemitterが機能しない？）．
-- 発生する例外について
-  - asyncHelper.streaming()内の処理を実行している最中にブラウザが終了する等でクライアントとの接続が切れた場合，以下の例外が発生する．
-    - `java.lang.IllegalStateException: Calling [asyncError()] is not valid for a request with Async state [MUST_DISPATCH]`
-### ポイント(ajaxFruits2.html)
-- EventSource()
-  - 参考：https://uhyohyo.net/javascript/13_2.html
-  - 参考：https://www.codeflow.site/ja/article/spring-mvc-sse-streams
-  - 参考：https://developer.mozilla.org/ja/docs/Web/API/Server-sent_events/Using_server-sent_events
+- Java側
+  - emitter.send()
+    - 対象メソッドの引数に与えられたSseEmitterにsend()で引数として他クラスのオブジェクトや文字列を与えることで，javascript側でオブジェクトの場合はjsonオブジェクトとして，文字列の場合は文字列として受け取ることができる．
+  - emitter.complete()
+    - これを呼び出すことで，emitterを利用して呼び出し処理が明示的に終了される．多分呼び出さないとemitterが終了されないままで，再利用できなくなる気がする．
+    - また，これが呼び出されていると，JS側でEventSourceに指定されたapiが何度も呼び出されて，streamingメソッドも何度も呼び出されるが，complete()していないと，streamingメソッドは再度呼び出されることはなくなる（正確には呼ばれていてもemitterが機能しない？）．
+  - 発生する例外について
+    - asyncService.async()内の処理を実行している最中にブラウザが終了する等でクライアントとの接続が切れた場合，以下のような例外が発生する．
+      - [組み込みTomcat] `java.lang.IllegalStateException: Calling [asyncError()] is not valid for a request with Async state [MUST_DISPATCH]`
+      - [組み込みjetty]`org.eclipse.jetty.io.EofException: null`
+      - TomcatのほうはSpringbootで発生してる？のか，catchできない．
+      - jettyのほうはemitter.send()でIOExceptionとして発生するので，catchすればクライアント切断時の処理を正しく実装できる．
+- EventSource(JS側)
   - Server-Sent EventsをJSで受け取るために使う．URLを引数に与えると，emitter.send()で送信された内容を送信されるたびにon.messageで受け取ることができる
-- sse.onmessage
+  - sse.onmessage
   - EventSourceからメッセージが送られてきたら（MessageEvent)，function(evt)を処理する．
   - EventSourceはサーバから接続が切断されても自動的に再接続が行われるらしい．回避しようと思ったら，処理終了時や例外発生時（切断時に例外が発生する）にsse.close()を呼び出すと良い．
   ```javascript
@@ -582,31 +560,31 @@ index:1 id:2 レモン 100 0.0 false
     sse.close();
   }
   ```
-  - ブラウザ終了時
-    - 組み込みTomcatの場合は`java.lang.IllegalStateException: Calling [asyncError()] is not valid for a request with Async state [MUST_DISPATCH]`という例外が発生する．これはcatchしてログに表示しないようにするのは今の時点ではやり方がわからない
-    - 組み込みjettyの場合は`org.eclipse.jetty.io.EofException: null` という例外が発生する．こちらの場合は，`AsyncHelper.java`の`streaming()`メソッド内部の`emitter.send()`でIOExceptionが発生するので，下記のようにcatchしてやれば切断時の処理を正しく実装できる
-```java
-  @Async
-  public void streaming(SseEmitter emitter, long eventNumber, int intervalSec) throws InterruptedException {
-    System.out.println("Start Async processing.");
+### 動作確認
+- `curl -i -s -N http://localhost:8000/sample5/sample52` と実行すると下記のようなヘッダやレスポンスが返る
+  - -i:Respnse Header, Body 両方を出力
+  - -s:silent mode
+  - -N: No buffer．これがついていないとデータがまとめて返ってくる
+  - text/event-streamになっていること，dataがemitter.sendのタイミングで送信されてくることを確認する
+```sh
+HTTP/1.1 200 OK
+Date: Wed, 26 Feb 2020 00:29:08 GMT
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Type: text/event-stream;charset=UTF-8
+Transfer-Encoding: chunked
 
-    for (int i = 1; i <= eventNumber; i++) {
-      TimeUnit.SECONDS.sleep(intervalSec);
-      Fruits fruits = new Fruits();
-      fruits.setName("メロン");
-      fruits.setNum(i);
-      fruits.setWeight(i * 25.5);
-      try {
-        emitter.send(fruits);
-      } catch (IOException e) {
-        System.out.println("IOException!");
-        break;
-      }
-      System.out.println("java:msg" + i);
-    }
+data:{"id":0,"name":"メロン","num":100,"weight":1.7,"details":null,"sent":false}
 
-    emitter.complete();
+data:{"id":0,"name":"メロン","num":100,"weight":1.7,"details":null,"sent":false}
 
-    System.out.println("End Async processing.");
-  }
+data:{"id":0,"name":"メロン","num":100,"weight":1.7,"details":null,"sent":false}
+
+data:{"id":0,"name":"メロン","num":100,"weight":1.7,"details":null,"sent":false}
 ```
+- ブラウザで`http://localhost:8000/sample5/sample52`にアクセスすると↑と同様emitter.sendのタイミングでデータが送信される．10回送信された時点で終了する．
+- ブラウザで`http://localhost:8000/sample52-1.html`にアクセスするとasyncService.async52()の処理がすべて完了後(約20秒後)にブラウザにすべてのデータ(10個分)が表示される．emitterがほぼ意味がない状態．
+- ブラウザで`http://localhost:8000/sample52-2.html`にアクセスすると，emitter.sendが実行されるたびにデータが画面に1つずつ表示される．また，一通り終わったあと続けてsample52が再呼び出しされるため，ブラウザを表示している限りデータを受信し続ける．

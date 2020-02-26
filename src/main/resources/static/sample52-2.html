@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+    $("#sse").text("");//初期化
+
+    var sse = new EventSource('http://localhost:8000/sample5/sample52');
+    $("#p2").text("");
+    // Java側でSseEmitter.send()が呼び出されるとsse.onmessageが反応し（MessageEvent），send()の引数が下記functionの引数evtを通じて渡される
+    // EventSourceは呼び出しが完了しても自動的に再接続されるらしい．
+    // 通信を完了したい場合はsse.close()をonmessageのfunction内部で呼び出すと良い
+    sse.onmessage = function (evt) {
+      var el = document.getElementById('sse');
+      el.appendChild(document.createTextNode(evt.data));
+      el.appendChild(document.createElement('br'));
+      // java側でemitter.complete()が呼ばれていた場合，js側でsse.close();を呼び出すまでイベントが発生し続ける．
+    };
+  </script>
+</head>
+
+<body>
+  <p id="p1"></p>
+  <p id="p2"></p>
+</body>
+<div id="sse"></div>
+
+</html>
