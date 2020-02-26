@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+    $("#p1").text(""); //初期化
+    $("#p2").text("");
+    $("#p3").text("");
+    // 通常のAjax呼び出し．PUSHに対応していないので，API呼び出し完了後に結果が返ってくる(done or failが実行される)
+    $.ajax({
+      url: "http://localhost:8000/sample5/sample52",
+      type: "GET",
+      contentType: "application/json",
+    }).done(function (data, textStatus, jqXHR) { //REST API呼び出し成功時
+      $("#p1").text(jqXHR.status); //ステータスコード．例：200
+      $("#p2").text(textStatus); // success と表示される
+      $("#p3").text(data);
+    }).fail(function (jqXHR, textStatus, errorThrown) { //REST API呼び出し失敗時
+      $("#p1").text(jqXHR.status); //例：404
+      $("#p2").text(textStatus); // error と表示される
+    }).always(function () {
+    });
+  </script>
+</head>
+
+<body>
+  <p id="p1"></p>
+  <p id="p2"></p>
+  <p id="p3"></p>
+</body>
+
+</html>
