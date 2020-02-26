@@ -1,6 +1,6 @@
 # Springbootsamples
 - Springbootを利用したWebアプリケーションの各種サンプル実装を行うサイト．
-- 対象のSpringbootのver.はv2.4.0.RELEASE
+- 対象のSpringbootのver.はv2.2.4.RELEASE
 
 <!-- TOC -->
 
@@ -86,7 +86,7 @@
 <!-- /TOC -->
 
 ## 環境構築
-- 必要な開発環境は下記を参照して構築すること
+- 必要な開発環境は下記(private)を参照して構築すること
 - https://github.com/igakilab/byod.zip_isdev
 - 以下のセットアップを適用した状態のリポジトリは以下
   - https://github.com/igakilab/springbootsamples/tree/v0.0.2
@@ -96,49 +96,49 @@
 - 作成したいアプリの名前でフォルダを作成し，そのフォルダをvscodeで開く
 - 表示->コマンドパレット，を選択し，Spring Initializr:Generate a Gradle Project を実行する
   - Specify project language: Java
-  - Input Group Id for your project: jp.ac.oit.is.{チーム名をアルファベット小文字で}
-    - 例：jp.ac.oit.is.inudaisuki
-      - スペースや特殊文字を含めないこと．すべてアルファベット小文字．
-      - 必ずしもjp.ac.oitから始まらなくても良い
+  - Input Group Id for your project: jp.ac.hoge.is.{チーム名をアルファベット小文字で}
+     - 例：jp.ac.hoge.is.inudaisuki
+       - スペースや特殊文字を含めないこと．すべてアルファベット小文字．
+       - 必ずしもjp.ac.hogeから始まらなくても良い
   - Input Artifact Id for your project: {アプリ名をアルファベット小文字で}
-    - 例：dogland
-    - スペースや特殊文字を含めないこと(_は入力できるが，不具合を誘発することがあるので使わないほうが良い)．すべてアルファベット小文字．また，セットアップ時に作成したフォルダ名と同じにしておくこと．
+     - 例：dogland
+     - スペースや特殊文字を含めないこと(_は入力できるが，不具合を誘発することがあるので使わないほうが良い)．すべてアルファベット小文字．また，セットアップ時に作成したフォルダ名と同じにしておくこと．
   - Specify Spring Boot version.: 2.2.4
   - Search for dependencies
-    - 以下を選択
-    - Spring Web
-    - Thymeleaf
-    - Mybatis Framework
-    - H2 Database
-    - Spring Security
-  - フォルダの選択を行うダイヤログが表示されるので，現在のフォルダのひとつ上（通常is_dev20などになる）を指定して，springbootのためのフォルダを作成させる．
+     - 以下を選択
+     - Spring Web
+     - Thymeleaf
+     - Mybatis Framework
+     - H2 Database
+     - Spring Security
+  - フォルダの選択を行うダイヤログが表示されるので，現在のフォルダのひとつ上を指定して，springbootのためのフォルダを作成させる．
     - このとき，すでにあるフォルダを上書き(overwrite)してよいか問い合わせがあるので，OKすること．
   - Successfully Generatedと出ればOK．
 - .gitignore作成
 - build.gradleを修正
   - https://github.com/igakilab/springbootsamples/blob/v0.0.2/build.gradle
   - tomcatでなくjettyを利用する設定と当初はSecurityを使わないのでその設定をコメントアウトする
-    - `implementation 'org.springframework.boot:spring-boot-starter-jetty'`追加
-    - `configurations`追加
-    - securityのimplementation設定をコメントアウト
+     - `implementation 'org.springframework.boot:spring-boot-starter-jetty'`追加
+     - `configurations`追加
+     - securityのimplementation設定をコメントアウト
 
 ### アプリ名等を後で変更したい場合
 - 以下のファイルを修正する
   - settings.gradle
-    - rootProject.name = 'springbootsamples' の行の'springbootsamples'をアプリ名に変更する．
-    - 小文字アルファベットだけから構成されるものにすること（半角スペースや全角文字は不可）
+     - rootProject.name = 'springbootsamples' の行の'springbootsamples'をアプリ名に変更する．
+     - 小文字アルファベットだけから構成されるものにすること（半角スペースや全角文字は不可）
   - build.gradle
-    - group = 'jp.ac.oit.igakilab' の行の右側を自分たちのグループ名に変更する．
-      - 例：'jp.ac.oit.inudaisuki'
-      - 小文字アルファベットだけから構成されるものにすること（半角スペースや全角文字は不可）
-    - src\main\java 以下のフォルダ構成とgroup及びrootProject.nameのアプリ名はおなじになるようにしておくこと．src\test\java も同じ
-    - 同じくクラスファイルのパッケージの修正も必要
+     - group = 'jp.ac.oit.igakilab' の行の右側を自分たちのグループ名に変更する．
+       - 例：'jp.ac.oit.inudaisuki'
+       - 小文字アルファベットだけから構成されるものにすること（半角スペースや全角文字は不可）
+     - src\main\java 以下のフォルダ構成とgroup及びrootProject.nameのアプリ名はおなじになるようにしておくこと．src\test\java も同じ
+  - 同じくクラスファイルのパッケージの修正も必要
 
 ### リポジトリの作成とpush
 - git init, git push
 
 ### application.properties
-- `C:\Users\...\oithomes\advanced\springboot_samples\src\main\resources\application.properties` に以下のような設定を追記
+- `springbootsamples\src\main\resources\application.properties` に以下のような設定を追記
   - 主にjetty周りの設定
   - 参考 https://howtodoinjava.com/spring-boot2/logging/embedded-server-logging-config/
   - tomcatの場合はこちらを参考：https://www.baeldung.com/spring-boot-embedded-tomcat-logs
@@ -152,7 +152,7 @@ server.jetty.accesslog.log-server=true
 server.port=8000
 spring.datasource.sql-script-encoding=UTF-8
 ```
-- プロジェクトのbuild/logsフォルダにアクセスログが保存されるようになる．LogFormat等は今後要検討
+- プロジェクトの直下にアクセスログが保存されるようになる（logsなどのディレクトリを作成して保存も可能だが，その場合はlogsディレクトリが作成されていないとbuild errorが発生するようになってしまう）．LogFormat等は今後要検討
 - ポート番号 `server.port=8000` を設定することで， http://localhost:8000/ でSpringBootアプリが動作するようになる
 
 ### SpringBootWebアプリの実行方法
@@ -163,44 +163,54 @@ spring.datasource.sql-script-encoding=UTF-8
 
 # Samples(シンプルなGET/POST)
 - HTTP/GET,POSTを利用したWebアプリケーションの作成方法
+
 ## [Sample1-1]templateを利用したhtmlファイルの表示(HTTP/GET)
 - 特定のURLリクエストに対して静的なhtmlを返すアプリケーション
+
 ### 参考
 - https://qiita.com/yama9112/items/ff829561238440437b99
+
 ### 関連するファイル
 - 実装：https://github.com/igakilab/springbootsamples/commit/23ac2c848ae671fe810f6ee09eeb3a805c975b8b
 - Sample1Controller.java
 - sample1.html
+
 ### 関連する機能
 - @Controller
 - @RequestMapping
+
 ### 動作確認
 - http://localhost:8000/sample1 をブラウザで表示する
 - HelloWorldと書かれたHTMLがブラウザに表示されればOK
 
 ## [Sample1-2] java-html間の値の受け渡し(HTTP/POST, タイムリーフ)
 - Webページのフォームで入力した値をjavaにPOSTし，処理した結果をhtmlで受け取って表示する．
+
 ### 参考
 - https://pointsandlines.jp/java/springboot-request-param
   - Controllerでリクエストパラメーターを受け取る
 - https://qiita.com/NagaokaKenichi/items/c6d1b76090ef5ef39482
   - タイムリーフのチートシート
+
 ### 関連するファイル
 - 実装：https://github.com/igakilab/springbootsamples/commit/93d39136181d84380b5e0f346ac0e2870282019e
 - Sample12Controller.java
 - sample12.html
+
 ### 関連する機能
 - @Controller
 - @RequestMapping (クラス)
 - @PostMapping 及び @RequestParam
 - @GetMapping
 - ModelMapを利用したJavaからHTMLへの値渡し
+
 ### 動作確認
 - http://localhost:8000/sample12 をブラウザで表示する
 - フォーム（テキストボックス）と送信ボタンが表示されるので，数字を入力して送信すると，フォームの下に`GET 1111`のように値が2行表示されればOK．
 
 # Samples(RestAPIの作成)
 - urlでリクエストをかけると，htmlではなく何らかの値や文字列が返ってくるRestAPIを実装する
+
 ## [Sample2-1] RestControllerの基本的な利用方法
 - Classにapiという名前をつけて，メソッドにrest21という名前をつける．
 - /api/rest21 にGETリクエストすると，Javaのrest21メソッドの返り値がかえってくる(HTMLではない)
@@ -257,8 +267,10 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 - curlの`-s` オプションはプログレス情報を表示しないためのもの
 
 # Samples(ベーシック認証)
+
 ## [Sample3-1]最もシンプルなベーシック認証
 - 特定のURLにアクセスする際にID・パスワードでの認証を行う
+
 ### 参考
 - https://www.memory-lovers.blog/entry/2016/05/15/142600
 - https://codezine.jp/article/detail/11703
@@ -288,6 +300,7 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 - `Authenticated!` と表示されればOK
 
 ## [Sample3-2]ベーシック認証時にログインユーザ名を取得する方法
+
 ### 参考
 - https://www.codeflow.site/ja/article/spring-security__get-current-logged-in-username-in-spring-security
 
@@ -308,6 +321,7 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 
 ## [Sample3-3]フォームでのログインとログアウト
 - フォームでログインし，logoutリクエストでログアウトを行うサンプル
+
 ### 参考
 - https://www.memory-lovers.blog/entry/2016/05/15/142600
 
@@ -325,9 +339,11 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 - http://localhost:8000/logout にブラウザでアクセスすると，サインイン情報が削除されて再度ログインフォームが表示される．
 
 # Samples(データベースとの連携)
+
 ## [Sample4-1]DBのテーブル設定，値登録とselectによる取得
 - schema.sqlの内容でテーブルを構築し，data.sqlの内容で初期データを登録する．
 - DBからSELECT文で値を取得し，Fruitsオブジェクトに格納する処理をMybatisのマッパー機能を利用して実装する．
+
 ### 参考
 - https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478
 - https://teratail.com/questions/99983
@@ -402,6 +418,7 @@ false
 
 ## [Sample4-3] フォームでPOSTしたデータをDBに登録する
 - オブジェクトごとPOSTでデータをHTMLからJavaに渡し，insert文をmapperインタフェースを利用して実行する
+
 ### 参考
 - https://qiita.com/kazuki43zoo/items/ea79e206d7c2e990e478#mybatisdemoapplication%E3%81%AE%E4%BF%AE%E6%AD%A3%E3%81%A8spring-boot%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E8%B5%B7%E5%8B%95
   - insert及びinsert時のkeyのauto incrementに関するサンプル
@@ -455,15 +472,19 @@ spring.datasource.driverClassName=org.h2.Driver
 spring.datasource.username=sa
 spring.datasource.password=
 ```
+
 ## [Sample4-4] DBから複数の値をArrayListで取得し，htmlで表示するサンプル
+
 ### 参考
 - https://qiita.com/NagaokaKenichi/items/c6d1b76090ef5ef39482#%E7%B9%B0%E3%82%8A%E8%BF%94%E3%81%97%E3%83%AB%E3%83%BC%E3%83%97
   - タイムリーフにおける繰り返し処理やステータス変数(stat)について
+
 ### 関連するファイル
 - 実装：https://github.com/igakilab/springbootsamples/commit/c9914b2fc6e25a3a0e338ce3b26714e55e7f8658
 - Sample4Controller.java
 - FruitsMapper.java
 - sample44.html
+
 ### 関連する機能
 - @Select
 - @GetMapping
@@ -479,11 +500,14 @@ index:1 id:2 レモン 100 0.0 false
 - 最初のindexはステータス変数(stat.index)の値．他のステータス変数については参考資料参照．
 
 # Samples(非同期呼び出し)
+
 ## [Sample5-1] @Asyncを利用した非同期処理
 - URLにアクセスすると一瞬でレスポンスがあるが，実際の処理はそのあと行われる
+
 ### 参考
 - https://qiita.com/aono-masashi/items/0ef2a0ddc8d901ff27dd
   - @Asyncの使い方
+
 ### 関連するファイル
 - 実装：https://github.com/igakilab/springbootsamples/commit/91f99fd6dd87d46154f69d2363c06865d0d6a16b
 - DemoApplication.java
@@ -491,6 +515,7 @@ index:1 id:2 レモン 100 0.0 false
   - この時点ではまだSse使わず
 - AsyncService.java
   - 非同期処理が行われるメソッドの実装
+
 ### 関連する機能
 - @EnableAsync // 非同期処理のためのアノテーション
 - @RestController
@@ -512,6 +537,7 @@ index:1 id:2 レモン 100 0.0 false
 - ブラウザから対象のAPIを呼び出すと，開いている間Push形式でJava側の処理が終わるたびにデータをブラウザで受け取って表示することができる．
 - サーバ->クライアントへの通信のみ対応．
 - IEとEdgeでは対応してないっぽい．
+
 ### 参考
 - Java側
   - https://qiita.com/kazuki43zoo/items/53b79fe91c41cc5c2e59
@@ -560,6 +586,7 @@ index:1 id:2 レモン 100 0.0 false
     sse.close();
   }
   ```
+
 ### 動作確認
 - `curl -i -s -N http://localhost:8000/sample5/sample52` と実行すると下記のようなヘッダやレスポンスが返る
   - -i:Respnse Header, Body 両方を出力
