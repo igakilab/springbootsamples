@@ -527,7 +527,7 @@ index:1 id:2 レモン 100 0.0 false
     - SseController内の一部の処理が非同期に呼び出される(L28-L43)．ただ，一部を非同期にするためにConcurrentパッケージのExecutorServiceが必要なのでおすすめしない
 
 ### 関連するファイル
-- 実装：
+- 実装：https://github.com/igakilab/springbootsamples/commit/3aadeb619671712ae291ac093da8f438bdcb99d3
 - Sample5RestSseController.java
 - AsyncService.java
 - sample52-1.html
