@@ -229,7 +229,8 @@ spring.datasource.sql-script-encoding=UTF-8
 
 ### 動作確認
 - http://localhost:8000/api/sample21 をブラウで表示する，あるいはbashターミナルで下記のように実行したときに，`Hello sample21!` と表示されればOK
-```bash
+
+```
 $ curl -s http://localhost:8000/api/sample21
 Hello sample21!
 ```
@@ -256,7 +257,8 @@ Hello sample21!
 ### 動作確認
 - bashターミナルで下記のようになればOK．ブラウザでも確認できる．
 - 上2つがパスパラメータ，3つ目がクエリパラメータ．
-```bash
+
+```
 $ curl -s http://localhost:8000/api/sample22/hoge
 受け取ったパラメータはhogeです
 $ curl -s http://localhost:8000/api/sample22/hoge/fuga
@@ -378,7 +380,8 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 
 ### 動作確認
 - http://localhost:8000/sample41 にアクセスすると，ターミナルに下記が表示されればOK．ブラウザにはFruits Listとだけ表示される．
-```bash
+
+```
 さがほのか
 10
 5.8
@@ -407,7 +410,9 @@ false
 
 ### 動作確認
 - ブラウザで http://localhost:8000/sample42 にアクセスすると，ブラウザにFruits Listの下に下記が2回繰り返して表示されればOK．
-```bash
+
+
+```
 さがほのか
 10
 5.8
@@ -448,7 +453,8 @@ false
 ### 動作確認
 - http://localhost:8000/sample43 にブラウザでアクセスし，名前に果物の名前を数に数値を入れて「送信」ボタンをクリックするとターミナルに以下のように入力した果物名や数値が表示されればOK
 - フォームに入力して「送信」すると，id2として（auto increment）送信した内容がDBに登録され，それがそのままフルーツ2としてターミナルに表示される
-```sh
+
+```
 ぶどう
 100
 0.0
@@ -465,6 +471,7 @@ false
 - Connectをクリックするとjdbc:h2:mem:testdbに接続される．
 - FRUITSというテーブルが作成されているので選択し，SELECT文などをRunさせると，テーブルにデータがINSERTされていることが確認できる．
 - Sample3BasicAuthConfiguration.javaに設定したようにCSRFとX-Frameの設定を解除しないとh2-consoleは正しくConnectできない．
+
 ```java
 spring.datasource.url=jdbc:h2:mem:testdb
 # H2DBを利用する場合のドライバ名，ユーザ名，パスワード（なし）
@@ -493,6 +500,7 @@ spring.datasource.password=
 ### 動作確認
 - http://localhost:8000/sample43 にアクセスし，果物を追加で登録する
 - http://localhost:8000/sample44 にアクセスし，下記のようにブラウザにFruitsのリストが表示されればOK
+
 ```
 index:0 id:1 さがほのか 10 5.8 いちご false
 index:1 id:2 レモン 100 0.0 false
@@ -580,6 +588,7 @@ index:1 id:2 レモン 100 0.0 false
   - sse.onmessage
   - EventSourceからメッセージが送られてきたら（MessageEvent)，function(evt)を処理する．
   - EventSourceはサーバから接続が切断されても自動的に再接続が行われるらしい．回避しようと思ったら，処理終了時や例外発生時（切断時に例外が発生する）にsse.close()を呼び出すと良い．
+
   ```javascript
     sse.onerror = function (evt) {
     console.log("error!!");
@@ -593,6 +602,7 @@ index:1 id:2 レモン 100 0.0 false
   - -s:silent mode
   - -N: No buffer．これがついていないとデータがまとめて返ってくる
   - text/event-streamになっていること，dataがemitter.sendのタイミングで送信されてくることを確認する
+
 ```sh
 HTTP/1.1 200 OK
 Date: Wed, 26 Feb 2020 00:29:08 GMT
