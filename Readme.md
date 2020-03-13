@@ -346,7 +346,7 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 - http://localhost:8000/logout にブラウザでアクセスすると，サインイン情報が削除されて再度ログインフォームが表示される．
 
 ## [Sample3-4]InMemory認証でのユーザの追加
-- user2,user2,adminユーザを追加してみる
+- user2,user3,adminユーザを追加してみる
 
 ### 参考
 - https://teachingprogramming.net/archives/199
