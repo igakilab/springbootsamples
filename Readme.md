@@ -49,39 +49,44 @@
     - [関連するファイル](#関連するファイル-6)
     - [関連する機能](#関連する機能-6)
     - [動作確認](#動作確認-6)
-- [Samples(データベースとの連携)](#samplesデータベースとの連携)
-  - [[Sample4-1]DBのテーブル設定，値登録とselectによる取得](#sample4-1dbのテーブル設定値登録とselectによる取得)
+  - [[Sample3-4]InMemory認証でのユーザの追加](#sample3-4inmemory認証でのユーザの追加)
     - [参考](#参考-7)
     - [関連するファイル](#関連するファイル-7)
     - [関連する機能](#関連する機能-7)
     - [動作確認](#動作確認-7)
-  - [[Sample4-2]DBの値を取得し，GETでHTMLに渡して表示する方法](#sample4-2dbの値を取得しgetでhtmlに渡して表示する方法)
+- [Samples(データベースとの連携)](#samplesデータベースとの連携)
+  - [[Sample4-1]DBのテーブル設定，値登録とselectによる取得](#sample4-1dbのテーブル設定値登録とselectによる取得)
     - [参考](#参考-8)
     - [関連するファイル](#関連するファイル-8)
     - [関連する機能](#関連する機能-8)
     - [動作確認](#動作確認-8)
-  - [[Sample4-3] フォームでPOSTしたデータをDBに登録する](#sample4-3-フォームでpostしたデータをdbに登録する)
+  - [[Sample4-2]DBの値を取得し，GETでHTMLに渡して表示する方法](#sample4-2dbの値を取得しgetでhtmlに渡して表示する方法)
     - [参考](#参考-9)
     - [関連するファイル](#関連するファイル-9)
     - [関連する機能](#関連する機能-9)
     - [動作確認](#動作確認-9)
-    - [動作確認（H2DBコンソール）](#動作確認h2dbコンソール)
-  - [[Sample4-4] DBから複数の値をArrayListで取得し，htmlで表示するサンプル](#sample4-4-dbから複数の値をarraylistで取得しhtmlで表示するサンプル)
+  - [[Sample4-3] フォームでPOSTしたデータをDBに登録する](#sample4-3-フォームでpostしたデータをdbに登録する)
     - [参考](#参考-10)
     - [関連するファイル](#関連するファイル-10)
     - [関連する機能](#関連する機能-10)
     - [動作確認](#動作確認-10)
-- [Samples(非同期呼び出し)](#samples非同期呼び出し)
-  - [[Sample5-1] @Asyncを利用した非同期処理](#sample5-1-asyncを利用した非同期処理)
+    - [動作確認（H2DBコンソール）](#動作確認h2dbコンソール)
+  - [[Sample4-4] DBから複数の値をArrayListで取得し，htmlで表示するサンプル](#sample4-4-dbから複数の値をarraylistで取得しhtmlで表示するサンプル)
     - [参考](#参考-11)
     - [関連するファイル](#関連するファイル-11)
     - [関連する機能](#関連する機能-11)
     - [動作確認](#動作確認-11)
-  - [[Sample5-2] Push型の非同期処理](#sample5-2-push型の非同期処理)
+- [Samples(非同期呼び出し)](#samples非同期呼び出し)
+  - [[Sample5-1] @Asyncを利用した非同期処理](#sample5-1-asyncを利用した非同期処理)
     - [参考](#参考-12)
     - [関連するファイル](#関連するファイル-12)
     - [関連する機能](#関連する機能-12)
     - [動作確認](#動作確認-12)
+  - [[Sample5-2] Push型の非同期処理](#sample5-2-push型の非同期処理)
+    - [参考](#参考-13)
+    - [関連するファイル](#関連するファイル-13)
+    - [関連する機能](#関連する機能-13)
+    - [動作確認](#動作確認-13)
 
 <!-- /TOC -->
 
@@ -339,6 +344,35 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 - SpringBootの提供するログインフォーム(ベーシック認証のダイアログではない)が表示されるので，user/password と入力する．
 - `Authenticated!` と表示されればOK
 - http://localhost:8000/logout にブラウザでアクセスすると，サインイン情報が削除されて再度ログインフォームが表示される．
+
+## [Sample3-4]InMemory認証でのユーザの追加
+- user2,user2,adminユーザを追加してみる
+
+### 参考
+- https://teachingprogramming.net/archives/199
+- https://www.memory-lovers.blog/entry/2016/05/15/142600
+- https://qiita.com/aikumi/items/256b7892effd5c92a39f
+- 複数ユーザの設定を.and()でつないでも良いし，auth.inMemoryAuthentication().withUserを複数個書いても良い．この実装サンプルでは後者
+
+### 関連するファイル
+- 実装：
+- Sample3BasicAuthConfiguration.java
+
+### 関連する機能
+- SpringBootのauth.inMemoryAuthentication().withUser
+
+### 動作確認
+- http://localhost:8000/sample3/sample32 にブラウザでアクセスする
+- SpringBootの提供するログインフォーム(ベーシック認証のダイアログではない)が表示されるので，Sample3BasicAuthConfiguration.javaで実装した下記ユーザでログインできるか確認する
+
+```java
+    auth.inMemoryAuthentication().withUser("user").password("{noop}password").roles("USER");
+    auth.inMemoryAuthentication().withUser("user2").password("{noop}password2").roles("USER");
+    auth.inMemoryAuthentication().withUser("user3").password("{noop}password3").roles("USER");
+    auth.inMemoryAuthentication().withUser("admin").password("{noop}admin").roles("ADMIN");
+```
+
+- `Hello user` など，ログインしたユーザ名が表示されればOK
 
 # Samples(データベースとの連携)
 
