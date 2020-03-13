@@ -355,7 +355,7 @@ $ curl -s http://localhost:8000/api/sample22?param=ora
 - 複数ユーザの設定を.and()でつないでも良いし，auth.inMemoryAuthentication().withUserを複数個書いても良い．この実装サンプルでは後者
 
 ### 関連するファイル
-- 実装：
+- 実装：https://github.com/igakilab/springbootsamples/commit/90213bc3e408e70fcd4ec6122035b968d0a92a7c
 - Sample3BasicAuthConfiguration.java
 
 ### 関連する機能
