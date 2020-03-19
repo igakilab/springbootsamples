@@ -10,6 +10,7 @@
   - [セットアップ（0からやる場合）](#セットアップ0からやる場合)
     - [Spring Initializrを利用したセットアップ](#spring-initializrを利用したセットアップ)
     - [application.properties](#applicationproperties)
+    - [index.htmlの配置](#indexhtmlの配置)
     - [SpringBootWebアプリの実行方法](#springbootwebアプリの実行方法)
     - [リポジトリの作成とpush](#リポジトリの作成とpush)
 - [Samples(シンプルなGET/POST)](#samplesシンプルなgetpost)
@@ -166,6 +167,9 @@ spring.datasource.sql-script-encoding=UTF-8
 
 - プロジェクトの直下にアクセスログが保存されるようになる（logsなどのディレクトリを作成して保存も可能だが，その場合はlogsディレクトリが作成されていないとbuild errorが発生するようになってしまう）．LogFormat等は今後要検討
 - ポート番号 `server.port=8000` を設定することで， http://localhost:8000/ でSpringBootアプリが動作するようになる
+
+### index.htmlの配置
+- `src/main/resource/static/index.html` を置く．index.htmlの中身はなんでもOK
 
 ### SpringBootWebアプリの実行方法
 - vscodeからターミナル->新しいターミナル，を選択し，bashのターミナルをエディタ下部に開く
