@@ -6,11 +6,12 @@
 
 - [Springbootsamples](#springbootsamples)
   - [環境構築](#環境構築)
+  - [セットアップ（簡易版）](#セットアップ簡易版)
+  - [セットアップ（0からやる場合）](#セットアップ0からやる場合)
     - [Spring Initializrを利用したセットアップ](#spring-initializrを利用したセットアップ)
-    - [アプリ名等を後で変更したい場合](#アプリ名等を後で変更したい場合)
-    - [リポジトリの作成とpush](#リポジトリの作成とpush)
     - [application.properties](#applicationproperties)
     - [SpringBootWebアプリの実行方法](#springbootwebアプリの実行方法)
+    - [リポジトリの作成とpush](#リポジトリの作成とpush)
 - [Samples(シンプルなGET/POST)](#samplesシンプルなgetpost)
   - [[Sample1-1]templateを利用したhtmlファイルの表示(HTTP/GET)](#sample1-1templateを利用したhtmlファイルの表示httpget)
     - [参考](#参考)
@@ -93,10 +94,30 @@
 ## 環境構築
 - 必要な開発環境は下記(private)を参照して構築すること
 - https://github.com/igakilab/byod.zip_isdev
-- 以下のセットアップを適用した状態のリポジトリは以下
-  - https://github.com/igakilab/springbootsamples/tree/v0.0.2
-  - これをclone, checkoutして下記[SpringBootWebアプリの実行方法]を試して正常に動作すればOK
 
+## セットアップ（簡易版）
+- 以下のセットアップを適用した状態のリポジトリは以下
+  - https://github.com/igakilab/springbootsamples/tree/v0.0.3
+  - これをcloneして下記[SpringBootWebアプリの実行方法]を試して正常に動作すればOK
+
+```
+$ git clone git@github.com:igakilab/springbootsamples.git
+Cloning into 'springbootsamples'...
+remote: Enumerating objects: 293, done.
+remote: Counting objects: 100% (293/293), done.
+remote: Compressing objects: 100% (179/179), done.
+remote: Total 767 (delta 109), reused 223 (delta 54), pack-reused 474
+Receiving objects: 100% (767/767), 233.15 KiB | 700.00 KiB/s, done.
+Resolving deltas: 100% (264/264), done.
+$ cd springbootsamples
+$ git checkout refs/tags/v0.0.3
+$ gradle bootRun
+:
+<=========----> 75% EXECUTING [26s]
+> :bootRun
+```
+
+## セットアップ（0からやる場合）
 ### Spring Initializrを利用したセットアップ
 - 作成したいアプリの名前でフォルダを作成し，そのフォルダをvscodeで開く
 - 表示->コマンドパレット，を選択し，Spring Initializr:Generate a Gradle Project を実行する
@@ -121,26 +142,11 @@
   - Successfully Generatedと出ればOK．
 - .gitignore作成
 - build.gradleを修正
-  - https://github.com/igakilab/springbootsamples/blob/v0.0.2/build.gradle
-  - tomcatでなくjettyを利用する設定と当初はSecurityを使わないのでその設定をコメントアウトする
+  - https://github.com/igakilab/springbootsamples/blob/v0.0.3/build.gradle
+  - tomcatでなくjettyを利用する設定を行い，当初はSecurityを使わないのでその設定をコメントアウトする
      - `implementation 'org.springframework.boot:spring-boot-starter-jetty'`追加
      - `configurations`追加
      - securityのimplementation設定をコメントアウト
-
-### アプリ名等を後で変更したい場合
-- 以下のファイルを修正する
-  - settings.gradle
-     - rootProject.name = 'springbootsamples' の行の'springbootsamples'をアプリ名に変更する．
-     - 小文字アルファベットだけから構成されるものにすること（半角スペースや全角文字は不可）
-  - build.gradle
-     - group = 'jp.ac.oit.igakilab' の行の右側を自分たちのグループ名に変更する．
-       - 例：'jp.ac.oit.inudaisuki'
-       - 小文字アルファベットだけから構成されるものにすること（半角スペースや全角文字は不可）
-     - src\main\java 以下のフォルダ構成とgroup及びrootProject.nameのアプリ名はおなじになるようにしておくこと．src\test\java も同じ
-  - 同じくクラスファイルのパッケージの修正も必要
-
-### リポジトリの作成とpush
-- git init, git push
 
 ### application.properties
 - `springbootsamples\src\main\resources\application.properties` に以下のような設定を追記
@@ -157,6 +163,7 @@ server.jetty.accesslog.log-server=true
 server.port=8000
 spring.datasource.sql-script-encoding=UTF-8
 ```
+
 - プロジェクトの直下にアクセスログが保存されるようになる（logsなどのディレクトリを作成して保存も可能だが，その場合はlogsディレクトリが作成されていないとbuild errorが発生するようになってしまう）．LogFormat等は今後要検討
 - ポート番号 `server.port=8000` を設定することで， http://localhost:8000/ でSpringBootアプリが動作するようになる
 
@@ -165,6 +172,11 @@ spring.datasource.sql-script-encoding=UTF-8
 - build.gradleファイルがあるのと同じディレクトリにいることを確認後，`gradle bootRun`を実行するとSpringBootアプリがビルドされ，組み込みjettyで起動する
   - `gradle build`を実行するとbuild/libs/ 以下に作成されるjarを対象に，java -jar ???.jar でもSpringBootWebアプリケーションを起動できる
 - http://localhost:8000/ にアクセスしたときになにかWebページが表示されていればOK．
+- 終了時は `gradle bootRun`を実行しているターミナルで，Ctr+Cを実行すれば良い
+  - vscode内のターミナルではなく，別のターミナルで実行したときに，Ctr+Cが効かない場合がある．その場合は別のターミナルを開き，build.gradleがあるフォルダで`gradle --stop` と実行すると良い．
+
+### リポジトリの作成とpush
+- git init, git push
 
 # Samples(シンプルなGET/POST)
 - HTTP/GET,POSTを利用したWebアプリケーションの作成方法
