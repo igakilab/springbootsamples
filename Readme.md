@@ -98,7 +98,7 @@
 
 ## セットアップ（簡易版）
 - 以下のセットアップを適用した状態のリポジトリは以下
-  - https://github.com/igakilab/springbootsamples/tree/v0.0.3
+  - https://github.com/igakilab/springbootsamples/tree/v0.0.4
   - これをcloneして下記[SpringBootWebアプリの実行方法]を試して正常に動作すればOK
 
 ```
@@ -111,7 +111,7 @@ remote: Total 767 (delta 109), reused 223 (delta 54), pack-reused 474
 Receiving objects: 100% (767/767), 233.15 KiB | 700.00 KiB/s, done.
 Resolving deltas: 100% (264/264), done.
 $ cd springbootsamples
-$ git checkout refs/tags/v0.0.3
+$ git checkout refs/tags/v0.0.4
 $ gradle bootRun
 :
 <=========----> 75% EXECUTING [26s]
